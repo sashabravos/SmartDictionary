@@ -9,25 +9,47 @@
 /* Begin PBXBuildFile section */
 		034EDEEC2A12CFC600DD1087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */; };
 		034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */; };
-		034EDEF02A12CFC600DD1087 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEF2A12CFC600DD1087 /* ViewController.swift */; };
+		034EDEF02A12CFC600DD1087 /* UserDictionaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */; };
 		034EDEF32A12CFC600DD1087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF12A12CFC600DD1087 /* Main.storyboard */; };
 		034EDEF62A12CFC600DD1087 /* DictionaryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEF42A12CFC600DD1087 /* DictionaryData.xcdatamodeld */; };
 		034EDEF82A12CFC700DD1087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF72A12CFC700DD1087 /* Assets.xcassets */; };
 		034EDEFB2A12CFC700DD1087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF92A12CFC700DD1087 /* LaunchScreen.storyboard */; };
 		034EDF072A12DB1B00DD1087 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */; };
+		034EDF092A14154100DD1087 /* UserDictionaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF082A14154100DD1087 /* UserDictionaryCell.swift */; };
+		034EDF0C2A14158600DD1087 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF0B2A14158600DD1087 /* Constants.swift */; };
+		034EDF0E2A141F4100DD1087 /* DictionaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF0D2A141F4100DD1087 /* DictionaryViewController.swift */; };
+		034EDF122A14226100DD1087 /* DictionaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF112A14226100DD1087 /* DictionaryCell.swift */; };
+		034EDF142A14233200DD1087 /* DictionaryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDF132A14233200DD1087 /* DictionaryItem.swift */; };
+		035E06FB2A1AD32D008D9EA2 /* Templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E06FA2A1AD32D008D9EA2 /* Templates.swift */; };
+		035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E06FF2A1AD955008D9EA2 /* DictionaryManager.swift */; };
+		035E07022A1AD993008D9EA2 /* DictionaryAPIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07012A1AD993008D9EA2 /* DictionaryAPIData.swift */; };
+		035E07042A1AD9B7008D9EA2 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */; };
+		848C7AFEB0744AB129752CEC /* Pods_SmartDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		034EDEE82A12CFC600DD1087 /* SmartDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		034EDEEF2A12CFC600DD1087 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
 		034EDEF22A12CFC600DD1087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		034EDEF52A12CFC600DD1087 /* SmartDictionary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartDictionary.xcdatamodel; sourceTree = "<group>"; };
 		034EDEF72A12CFC700DD1087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		034EDEFA2A12CFC700DD1087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		034EDEFC2A12CFC700DD1087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		034EDF082A14154100DD1087 /* UserDictionaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryCell.swift; sourceTree = "<group>"; };
+		034EDF0B2A14158600DD1087 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		034EDF0D2A141F4100DD1087 /* DictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewController.swift; sourceTree = "<group>"; };
+		034EDF112A14226100DD1087 /* DictionaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryCell.swift; sourceTree = "<group>"; };
+		034EDF132A14233200DD1087 /* DictionaryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryItem.swift; sourceTree = "<group>"; };
+		035E06FA2A1AD32D008D9EA2 /* Templates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Templates.swift; sourceTree = "<group>"; };
+		035E06FF2A1AD955008D9EA2 /* DictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryManager.swift; sourceTree = "<group>"; };
+		035E07012A1AD993008D9EA2 /* DictionaryAPIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryAPIData.swift; sourceTree = "<group>"; };
+		035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
+		10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.debug.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.debug.xcconfig"; sourceTree = "<group>"; };
+		ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.release.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848C7AFEB0744AB129752CEC /* Pods_SmartDictionary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +69,8 @@
 			children = (
 				034EDEEA2A12CFC600DD1087 /* SmartDictionary */,
 				034EDEE92A12CFC600DD1087 /* Products */,
+				3C577E9CD95D1506AF922C20 /* Pods */,
+				AEBD05DC69ED59845664D522 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,15 +87,97 @@
 			children = (
 				034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */,
 				034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */,
-				034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */,
-				034EDEEF2A12CFC600DD1087 /* ViewController.swift */,
-				034EDEF12A12CFC600DD1087 /* Main.storyboard */,
-				034EDEF72A12CFC700DD1087 /* Assets.xcassets */,
-				034EDEF92A12CFC700DD1087 /* LaunchScreen.storyboard */,
+				034EDF0A2A14156000DD1087 /* Model */,
+				034EDF102A141FF500DD1087 /* View */,
+				034EDF0F2A141FCB00DD1087 /* Controllers */,
+				035E06F92A1931D0008D9EA2 /* Support Files */,
 				034EDEFC2A12CFC700DD1087 /* Info.plist */,
-				034EDEF42A12CFC600DD1087 /* DictionaryData.xcdatamodeld */,
 			);
 			path = SmartDictionary;
+			sourceTree = "<group>";
+		};
+		034EDF0A2A14156000DD1087 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				035E06FE2A1AD906008D9EA2 /* API */,
+				035E06FC2A1AD855008D9EA2 /* CoreData */,
+				034EDF0B2A14158600DD1087 /* Constants.swift */,
+				035E06FA2A1AD32D008D9EA2 /* Templates.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		034EDF0F2A141FCB00DD1087 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */,
+				034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */,
+				034EDF0D2A141F4100DD1087 /* DictionaryViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		034EDF102A141FF500DD1087 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				035E06FD2A1AD89C008D9EA2 /* Cells */,
+				034EDEF12A12CFC600DD1087 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		035E06F92A1931D0008D9EA2 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				034EDEF72A12CFC700DD1087 /* Assets.xcassets */,
+				034EDEF92A12CFC700DD1087 /* LaunchScreen.storyboard */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		035E06FC2A1AD855008D9EA2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				034EDEF42A12CFC600DD1087 /* DictionaryData.xcdatamodeld */,
+				034EDF132A14233200DD1087 /* DictionaryItem.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		035E06FD2A1AD89C008D9EA2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				034EDF082A14154100DD1087 /* UserDictionaryCell.swift */,
+				034EDF112A14226100DD1087 /* DictionaryCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		035E06FE2A1AD906008D9EA2 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				035E06FF2A1AD955008D9EA2 /* DictionaryManager.swift */,
+				035E07012A1AD993008D9EA2 /* DictionaryAPIData.swift */,
+				035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		3C577E9CD95D1506AF922C20 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */,
+				ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		AEBD05DC69ED59845664D522 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +187,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 034EDEFF2A12CFC700DD1087 /* Build configuration list for PBXNativeTarget "SmartDictionary" */;
 			buildPhases = (
+				9CDE528751F4325B11D5E921 /* [CP] Check Pods Manifest.lock */,
 				034EDEE42A12CFC600DD1087 /* Sources */,
 				034EDEE52A12CFC600DD1087 /* Frameworks */,
 				034EDEE62A12CFC600DD1087 /* Resources */,
@@ -139,16 +247,50 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9CDE528751F4325B11D5E921 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartDictionary-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		034EDEE42A12CFC600DD1087 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				034EDEF02A12CFC600DD1087 /* ViewController.swift in Sources */,
+				034EDF122A14226100DD1087 /* DictionaryCell.swift in Sources */,
+				035E07042A1AD9B7008D9EA2 /* DictionaryModel.swift in Sources */,
+				034EDEF02A12CFC600DD1087 /* UserDictionaryViewController.swift in Sources */,
+				035E06FB2A1AD32D008D9EA2 /* Templates.swift in Sources */,
 				034EDF072A12DB1B00DD1087 /* WelcomeViewController.swift in Sources */,
 				034EDEF62A12CFC600DD1087 /* DictionaryData.xcdatamodeld in Sources */,
 				034EDEEC2A12CFC600DD1087 /* AppDelegate.swift in Sources */,
+				034EDF0C2A14158600DD1087 /* Constants.swift in Sources */,
+				034EDF092A14154100DD1087 /* UserDictionaryCell.swift in Sources */,
+				034EDF0E2A141F4100DD1087 /* DictionaryViewController.swift in Sources */,
+				034EDF142A14233200DD1087 /* DictionaryItem.swift in Sources */,
 				034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */,
+				035E07022A1AD993008D9EA2 /* DictionaryAPIData.swift in Sources */,
+				035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +432,7 @@
 		};
 		034EDF002A12CFC700DD1087 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -318,6 +461,7 @@
 		};
 		034EDF012A12CFC700DD1087 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
