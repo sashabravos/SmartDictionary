@@ -9,62 +9,73 @@ import UIKit
 
 class DictionaryCell: UICollectionViewCell {
     
+    // MARK: - UI Elements
+    
     let wordLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let transcriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let translationLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .black
-        label.numberOfLines = 0
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let exampleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .gray
-        label.numberOfLines = 0
-        return label
-    }()
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        
+        setupViews()
     }
     
-    func setupViews() {
-        addSubview(wordLabel)
-        addSubview(translationLabel)
-        addSubview(exampleLabel)
+    // MARK: - View Setup
+    
+    private func setupViews() {
+        contentView.addSubview(wordLabel)
+        contentView.addSubview(transcriptionLabel)
+        contentView.addSubview(translationLabel)
         
-        // Setup title
+        // Constraints
         NSLayoutConstraint.activate([
-            wordLabel.topAnchor.constraint(equalTo: topAnchor),
-            wordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            wordLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-        
-        // Setup translation
-            translationLabel.topAnchor.constraint(equalTo: wordLabel.bottomAnchor),
-            translationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            translationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            wordLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            wordLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            wordLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
-        // Setup example
-            exampleLabel.topAnchor.constraint(equalTo: translationLabel.bottomAnchor, constant: 2),
-            exampleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            exampleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            exampleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+            transcriptionLabel.topAnchor.constraint(equalTo: wordLabel.bottomAnchor, constant: 2),
+            transcriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            transcriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            
+            translationLabel.topAnchor.constraint(equalTo: transcriptionLabel.bottomAnchor, constant: 4),
+            translationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            translationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            translationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
+    
+    func configure(with dictionaryModel: DictionaryModel) {
+        wordLabel.text = dictionaryModel.currentWord
+        transcriptionLabel.text = dictionaryModel.transcription
+        translationLabel.text = dictionaryModel.translation
+    }
 }
-

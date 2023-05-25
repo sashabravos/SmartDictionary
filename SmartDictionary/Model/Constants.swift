@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Keys {
+    static let userCell = "userCellIdentifier"
+}

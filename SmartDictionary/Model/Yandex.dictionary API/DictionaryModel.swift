@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct DictionaryModel {
+    let currentWord: String
+    let translation: String
+    let transcription: String
+}
