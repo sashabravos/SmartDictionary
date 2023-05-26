@@ -7,142 +7,115 @@
 
 import UIKit
 
-class DictionaryViewController: UIViewController, UISearchBarDelegate {
+class DictionaryViewController: UITableViewController {
     
     var dictionaryManager = DictionaryManager()
-
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
-        return collectionView
-    }()
+    let searchController = UISearchController(searchResultsController: nil)
+    let englishWords = WordBase().sortedWordsArray
+    var dictionaryItems: [DictionaryModel] = []
+    var filteredDictionaryItems: [DictionaryModel] = []
     
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search"
-        return searchController
-    }()
+    var wordDictionary: [String: [String]] = [:]
+    var sections: [String] = []
     
-    private lazy var userDictionaryButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "My Dictionary", style: .plain, target: self, action: #selector(backToUserDictionary))
-        button.tintColor = .label
-        return button
-    }()
-    
-    var dictionaryItems: [DictionaryModel] = [] // Массив с данными словаря
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         title = "Dictionary"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationItem.leftBarButtonItem = userDictionaryButton
+        tableView.register(DictionaryCell.self, forCellReuseIdentifier: "DictionaryCell")
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        tableView.tableHeaderView = searchController.searchBar
         
         dictionaryManager.delegate = self
-        searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        
-        setupCollectionView()
-        setupConstraints()
-        
         loadDataFromAPI()
     }
     
-    func setupCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(DictionaryCell.self, forCellWithReuseIdentifier: "DictionaryCell")
-        view.addSubview(collectionView)
-    }
-    
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
-    
     func loadDataFromAPI() {
-        // Загрузка всех английских слов из API
-        let englishWords = ["bird", "world", "peace", "row", "bear", "banana"]// Замените на реальные английские слова или получите их из API
         for word in englishWords {
             dictionaryManager.getWordInfo(word: word)
         }
     }
-}
-
-extension DictionaryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dictionaryItems.count
+    func filterWords(for searchText: String?) {
+        if let searchText = searchText, !searchText.isEmpty {
+            filteredDictionaryItems = dictionaryItems.filter { $0.currentWord.lowercased().contains(searchText.lowercased()) }
+        } else {
+            filteredDictionaryItems = dictionaryItems
+        }
+        groupWords()
+        tableView.reloadData()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DictionaryCell", for: indexPath) as! DictionaryCell
-        let dictionaryItem = dictionaryItems[indexPath.item]
+    func groupWords() {
+        wordDictionary.removeAll()
         
-        cell.wordLabel.text = dictionaryItem.currentWord
-        cell.transcriptionLabel.text = dictionaryItem.transcription
-        cell.translationLabel.text = dictionaryItem.translation
+        for dictionaryItem in filteredDictionaryItems {
+            let firstLetter = String(dictionaryItem.currentWord.prefix(1)).uppercased()
+            if var wordGroup = wordDictionary[firstLetter] {
+                wordGroup.append(dictionaryItem.currentWord)
+                wordDictionary[firstLetter] = wordGroup
+            } else {
+                wordDictionary[firstLetter] = [dictionaryItem.currentWord]
+            }
+        }
+        
+        sections = wordDictionary.keys.sorted()
+    }
+    
+    // MARK: - Table View Data Source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionTitle = sections[section]
+        return wordDictionary[sectionTitle]?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DictionaryCell", for: indexPath) as! DictionaryCell
+        let sectionTitle = sections[indexPath.section]
+        let wordsInSection = wordDictionary[sectionTitle]
+        let word = wordsInSection?[indexPath.row] ?? ""
+        
+        cell.wordLabel.text = word
+        cell.transcriptionLabel.text = dictionaryItems.first { $0.currentWord == word }?.transcription
+        cell.translationLabel.text = dictionaryItems.first { $0.currentWord == word }?.translation
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = collectionView.bounds.width - 20 // Ширина ячейки CollectionView с отступами
-        let cellHeight: CGFloat = 100 // Высота ячейки CollectionView
-        
-        return CGSize(width: cellWidth, height: cellHeight)
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
     }
+}
 
-    // Add any additional UICollectionViewDelegateFlowLayout methods if needed
-    // MARK: - UISearchBarDelegate
-    
+// MARK: - UISearchBarDelegate
+
+extension DictionaryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Фильтрация слов по тексту поиска
         filterWords(for: searchText)
-        collectionView.reloadData()
     }
     
-    func filterWords(for searchText: String?) {
-        if let searchText = searchText {
-            dictionaryItems = dictionaryItems.filter { $0.currentWord.lowercased().contains(searchText.lowercased()) }
-        }
-    }
-    
-    func isSearchActive() -> Bool {
-        return searchController.isActive && !isSearchBarEmpty()
-    }
-    
-    func isSearchBarEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    // MARK: - Button Actions
-    
-    @objc func backToUserDictionary() {
-        let userDictionaryVC = UserDictionaryViewController()
-        navigationController?.pushViewController(userDictionaryVC, animated: true)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filterWords(for: nil)
     }
 }
 
 // MARK: - DictionaryManagerDelegate
+
 extension DictionaryViewController: DictionaryManagerDelegate {
     func didUpdateData(_ dictionaryManager: DictionaryManager, dictionary: DictionaryModel) {
         DispatchQueue.main.async {
             self.dictionaryItems.append(dictionary)
-            self.collectionView.reloadData()
+            self.filterWords(for: self.searchController.searchBar.text)
         }
     }
-        
+    
     func didFailWithError(error: Error) {
         print("Error loading data: \(error)")
     }
