@@ -10,6 +10,10 @@ import UIKit
 class UserCell: UITableViewCell {
     
     static let identifier = Keys.userCell
+    
+    let cellTitle = ""
+    let cellTitleTranslation = ""
+    let cellTitleExample = ""
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

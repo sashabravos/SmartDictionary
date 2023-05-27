@@ -103,7 +103,7 @@ class DictionaryViewController: UITableViewController {
     // MARK: - Button Action
     
     @objc private func addToUserDictionary() {
-        Templates().showBottomSheet(self)
+        Templates().showBottomSheet(self, bottomSheet: AddWordBottomSheet())
     }
 }
 

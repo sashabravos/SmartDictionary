@@ -9,8 +9,8 @@ import UIKit
 
 class Templates {
     
-    public func showBottomSheet(_ currentViewController: UIViewController) {
-        let bottomSheet = BottomSheetViewController()
+    public func showBottomSheet(_ currentViewController: UIViewController, bottomSheet: UIViewController) {
+        let bottomSheet = bottomSheet
         let nav = UINavigationController(rootViewController: bottomSheet)
         nav.modalPresentationStyle = .pageSheet
         
@@ -36,7 +36,7 @@ extension UITextView {
         self.addSubview(placeholderLabel)
         
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)

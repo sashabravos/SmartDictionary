@@ -129,6 +129,14 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         return cell
     }
     
+    // MARK: - Tableview Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        Templates().showBottomSheet(self, bottomSheet: editBottomSheet())
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: - UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -156,7 +164,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Button Actions
     
     @objc private func showAddWordBottomSheet() {
-        Templates().showBottomSheet(self)
+        Templates().showBottomSheet(self, bottomSheet: AddWordBottomSheet())
     }
     
     @objc func goToDictionary() {

@@ -1,5 +1,5 @@
 //
-//  BottomSheetViewController.swift
+//  AddWordBottomSheet.swift
 //  SmartDictionary
 //
 //  Created by Александра Кострова on 26.05.2023.
@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class BottomSheetViewController: UIViewController {
+class AddWordBottomSheet: UIViewController {
     
     //    var selectedCategory: Category? {
     //        didSet {
@@ -26,11 +26,11 @@ class BottomSheetViewController: UIViewController {
         textView.textColor = .black
         textView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
         textView.isEditable = true
-        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
         textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.lightGray.cgColor
-        textView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        textView.textContainerInset = UIEdgeInsets(top: 15, left: 8, bottom: 4, right: 8)
         
         return textView
     }
