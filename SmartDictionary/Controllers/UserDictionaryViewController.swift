@@ -6,24 +6,8 @@
 //
 
 import UIKit
-import CoreData
-
-
-import UIKit
 
 class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
-    
-    //    var selectedCategory: Category? {
-    //        didSet {
-    //            loadSortedWords()
-    //        }
-    //    }
-    
-    //    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    //    private let request: NSFetchRequest <Word> = Word.fetchRequest()
-    //
-    
-    // MARK: - 1st version
     
     var words: [String] = []
     var filteredWords: [String] = []
@@ -37,7 +21,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     }()
     
     private lazy var addButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewWord))
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddWordBottomSheet))
         button.tintColor = .label
         return button
     }()
@@ -78,7 +62,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     
     func groupWords() {
         
-        // Группировка слов по первой букве
+        // grouping words by first letter
         for word in words {
             let firstLetter = String(word.prefix(1)).uppercased()
             if var wordGroup = wordDictionary[firstLetter] {
@@ -89,14 +73,11 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             }
         }
         
-        // Создание отсортированного списка секций
         sections = wordDictionary.keys.sorted()
         
-        // Обновление данных таблицы
         tableView.reloadData()
+        
     }
-    
-
     
     // MARK: - UITableView DataSource
     
@@ -106,31 +87,6 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         } else {
             return sections.count
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearchActive() {
-            return filteredWords.count
-        } else {
-            let sectionKey = sections[section]
-            return wordDictionary[sectionKey]?.count ?? 0
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath)
-        let word: String
-        if isSearchActive() {
-            word = filteredWords[indexPath.row]
-        } else {
-            let sectionKey = sections[indexPath.section]
-            word = wordDictionary[sectionKey]![indexPath.row]
-        }
-        
-        // Настройка ячейки для отображения слова
-        cell.textLabel?.text = word
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -147,6 +103,30 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         } else {
             return sections
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSearchActive() {
+            return filteredWords.count
+        } else {
+            let sectionKey = sections[section]
+            return wordDictionary[sectionKey]?.count ?? 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath)
+        let word: String
+        if isSearchActive() {
+            word = filteredWords[indexPath.row]
+        } else {
+            let sectionKey = sections[indexPath.section]
+            word = wordDictionary[sectionKey]![indexPath.row]
+        }
+        
+        cell.textLabel?.text = word
+        
+        return cell
     }
     
     // MARK: - UISearchBarDelegate
@@ -175,8 +155,8 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     
     // MARK: - Button Actions
     
-    @objc func addNewWord() {
-        words.append("Some word")
+    @objc private func showAddWordBottomSheet() {
+        Templates().showBottomSheet(self)
     }
     
     @objc func goToDictionary() {
@@ -184,8 +164,6 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         navigationController?.pushViewController(dictionaryVC, animated: true)
     }
 }
-
-
 
 // MARK: - 2nd version
         

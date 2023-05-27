@@ -7,42 +7,15 @@
 
 import UIKit
 
-class DictionaryCell: UITableViewCell {
+final class DictionaryCell: UITableViewCell {
     
-    // MARK: - UI Elements
+    static let identifier = Keys.dictionaryCell
     
-    let wordLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var wordLabel = UILabel()
+    private lazy var transcriptionLabel = UILabel()
+    private lazy var translationLabel = UILabel()
+    lazy var addButton = UIButton()
     
-    let transcriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let translationLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var addButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(addToUserDictionary), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .systemBlue
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,23 +25,24 @@ class DictionaryCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-        setupViews()
     }
     
     // MARK: - View Setup
     
     private func setupViews() {
-        contentView.addSubview(wordLabel)
-        contentView.addSubview(transcriptionLabel)
-        contentView.addSubview(translationLabel)
-        contentView.addSubview(addButton)
+        
+        configUI()
+        
+        [wordLabel, transcriptionLabel, translationLabel, addButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview($0)
+        }
         
         // Constraints
         NSLayoutConstraint.activate([
             wordLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             wordLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            wordLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -8), // Обновлено ограничение для выравнивания кнопки справа
+            wordLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -8),
             
             transcriptionLabel.topAnchor.constraint(equalTo: wordLabel.bottomAnchor, constant: 2),
             transcriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
@@ -80,9 +54,9 @@ class DictionaryCell: UITableViewCell {
             translationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
             addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8), // Обновлено ограничение для размещения кнопки справа
+            addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            addButton.widthAnchor.constraint(equalToConstant: 44), // Установлено фиксированное значение ширины кнопки
+            addButton.widthAnchor.constraint(equalToConstant: 44)
         ])
     }
     
@@ -92,7 +66,24 @@ class DictionaryCell: UITableViewCell {
         translationLabel.text = dictionaryItem.translation
     }
     
-    @objc func addToUserDictionary() {
-        // Действие кнопки "Добавить"
+    
+}
+
+// MARK: - Private Extensions
+
+private extension DictionaryCell {
+    func configUI() {
+    
+        wordLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        wordLabel.textColor = .black
+        
+        transcriptionLabel.font = UIFont.systemFont(ofSize: 12)
+        transcriptionLabel.textColor = .gray
+        
+        translationLabel.font = UIFont.systemFont(ofSize: 14)
+        translationLabel.textColor = .darkGray
+        
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.tintColor = .label
     }
 }
