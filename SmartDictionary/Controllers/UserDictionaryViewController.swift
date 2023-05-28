@@ -5,6 +5,7 @@
 //  Created by Александра Кострова on 15.05.2023.
 //
 
+
 import UIKit
 import CoreData
 
@@ -14,9 +15,6 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let request: NSFetchRequest <UserWord> = UserWord.fetchRequest()
     
-    var words: [String] = []
-    var filteredWords: [String] = []
-    var sections: [String] = []
     var wordDictionary: [String: [String]] = [:]
         
     private lazy var searchController: UISearchController = {
@@ -63,36 +61,24 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     func groupWords() {
         
         // grouping words by first letter
-        for word in words {
-            let firstLetter = String(word.prefix(1)).uppercased()
-            if var wordGroup = wordDictionary[firstLetter] {
-                wordGroup.append(word)
-                wordDictionary[firstLetter] = wordGroup
-            } else {
-                wordDictionary[firstLetter] = [word]
+        for word in wordsArray {
+            if let wordText = word.text {
+                let firstLetter = String(wordText.prefix(1)).uppercased()
+                if var wordGroup = wordDictionary[firstLetter] {
+                    wordGroup.append(wordText)
+                    wordDictionary[firstLetter] = wordGroup
+                } else {
+                    wordDictionary[firstLetter] = [wordText]
+                }
             }
         }
         
-        sections = wordDictionary.keys.sorted()
-        
         tableView.reloadData()
-        
     }
     
     func loadWords() {
         do {
             wordsArray = try context.fetch(request)
-            
-            // Очищаем массив words перед загрузкой новых слов
-            words.removeAll()
-            
-            // Заполняем массив words значениями из базы данных
-            for word in wordsArray {
-                if let wordText = word.text {
-                    words.append(wordText)
-                }
-            }
-            
         } catch {
             print("Error loading categories \(error)")
         }
@@ -106,7 +92,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         if isSearchActive() {
             return 1
         } else {
-            return sections.count
+            return wordDictionary.count
         }
     }
     
@@ -114,7 +100,8 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         if isSearchActive() {
             return nil
         } else {
-            return sections[section]
+            let sectionKey = Array(wordDictionary.keys.sorted())[section]
+            return sectionKey
         }
     }
     
@@ -122,15 +109,15 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         if isSearchActive() {
             return nil
         } else {
-            return sections
+            return Array(wordDictionary.keys.sorted())
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearchActive() {
-            return filteredWords.count
+            return wordDictionary.values.flatMap({ $0 }).count
         } else {
-            let sectionKey = sections[section]
+            let sectionKey = Array(wordDictionary.keys.sorted())[section]
             return wordDictionary[sectionKey]?.count ?? 0
         }
     }
@@ -139,9 +126,10 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath) as! UserCell
         let word: String
         if isSearchActive() {
-            word = filteredWords[indexPath.row]
+            let allWords = wordDictionary.values.flatMap({ $0 })
+            word = allWords[indexPath.row]
         } else {
-            let sectionKey = sections[indexPath.section]
+            let sectionKey = Array(wordDictionary.keys.sorted())[indexPath.section]
             word = wordDictionary[sectionKey]![indexPath.row]
         }
 
@@ -159,7 +147,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
             let editBottomSheet = EditBottomSheet()
-            editBottomSheet.titleLabel.text = cell.cellTitle
+            editBottomSheet.titleLabel.text = cell.cellTitle?.capitalized
             editBottomSheet.newWordTextView.text = cell.cellTitle
             editBottomSheet.translationTextView.text = cell.cellTitleTranslation
             editBottomSheet.exampleTextView.text = cell.cellTitleExample
@@ -180,12 +168,13 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func filterWords(for searchText: String?) {
-        filteredWords = words.filter { word in
-            if let searchText = searchText {
-                return word.lowercased().contains(searchText.lowercased())
-            }
-            return false
+        guard let searchText = searchText, !searchText.isEmpty else {
+            wordDictionary = loadAllWords()
+            return
         }
+        
+        let filteredWords = wordsArray.filter { $0.text?.localizedCaseInsensitiveContains(searchText) == true }
+        wordDictionary = createWordDictionary(from: filteredWords)
     }
     
     func isSearchActive() -> Bool {
@@ -194,6 +183,42 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     
     func isSearchBarEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func loadAllWords() -> [String: [String]] {
+        var allWords: [String: [String]] = [:]
+        
+        for word in wordsArray {
+            if let wordText = word.text {
+                let firstLetter = String(wordText.prefix(1)).uppercased()
+                if var wordGroup = allWords[firstLetter] {
+                    wordGroup.append(wordText)
+                    allWords[firstLetter] = wordGroup
+                } else {
+                    allWords[firstLetter] = [wordText]
+                }
+            }
+        }
+        
+        return allWords
+    }
+    
+    func createWordDictionary(from words: [UserWord]) -> [String: [String]] {
+        var wordDictionary: [String: [String]] = [:]
+        
+        for word in words {
+            if let wordText = word.text {
+                let firstLetter = String(wordText.prefix(1)).uppercased()
+                if var wordGroup = wordDictionary[firstLetter] {
+                    wordGroup.append(wordText)
+                    wordDictionary[firstLetter] = wordGroup
+                } else {
+                    wordDictionary[firstLetter] = [wordText]
+                }
+            }
+        }
+        
+        return wordDictionary
     }
     
     // MARK: - Button Actions

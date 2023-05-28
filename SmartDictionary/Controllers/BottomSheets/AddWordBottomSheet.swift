@@ -94,26 +94,28 @@ class AddWordBottomSheet: UIViewController {
         ])
     }
     
+    func saveWordInfo() {
+        let userDictionary = UserDictionaryViewController()
+        
+        do {
+            try context.save()
+            print("Word saved successfully!")
+        } catch {
+            print("Error saving word: \(error)")
+        }
+        
+        userDictionary.tableView.reloadData()
+    }
+    
     @objc private func addWordToUserDictionary() {
         
-        let userDictionary = UserDictionaryViewController()
         let newWord = NewWordModel(text: newWordTextView.text ?? "", translation: translationTextView.text ?? "", example: exampleTextView.text ?? "")
         
         userWord = UserWord(context: context)
-        userWord?.text = newWord.text
+        userWord?.text = newWord.text.lowercased()
         userWord?.translation = newWord.translation
         userWord?.example = newWord.example
         
-        func saveWordInfo() {
-            do {
-                try context.save()
-                print("Word saved successfully!")
-            } catch {
-                print("Error saving word: \(error)")
-            }
-
-            userDictionary.tableView.reloadData()
-        }
         saveWordInfo()
         
         dismiss(animated: true, completion: nil)

@@ -14,8 +14,6 @@ class EditBottomSheet: UIViewController {
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var titleTest = String()
-    
     private func anyTextView() -> UITextView {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 20)
@@ -33,7 +31,6 @@ class EditBottomSheet: UIViewController {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-//        label.text = "Word"
         label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
@@ -96,19 +93,8 @@ class EditBottomSheet: UIViewController {
         ])
     }
     
-    func getWordInfo(text: String) -> String {
-        let wordInfo = WordInfo(text: text)
-        titleTest = wordInfo.text
-        print("getWord \(text)")
-        return titleTest
-
-//        titleLabel.text = cellTitle
-//        newWordTextField.text = cellTitle
-//        translationTextField.text = cellTitleTranslation
-//        exampleTextView.text = cellTitleExample
-    }
-    
     @objc private func updateWordInfo() {
+        AddWordBottomSheet().saveWordInfo()
         dismiss(animated: true, completion: nil)
     }
 }

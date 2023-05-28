@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class Templates {
     
@@ -21,6 +22,17 @@ class Templates {
         
         currentViewController.present(nav, animated: true, completion: nil)
     }
+    
+//    public func saveWordInfo(_ context: NSManagedObjectContext) {
+//        do {
+//            try context.save()
+//            print("Word saved successfully!")
+//        } catch {
+//            print("Error saving word: \(error)")
+//        }
+//
+//        UserDictionaryViewController().tableView.reloadData()
+//    }
 }
 
 extension UITextView {
