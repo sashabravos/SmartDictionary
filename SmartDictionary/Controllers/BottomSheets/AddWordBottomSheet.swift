@@ -10,15 +10,9 @@ import CoreData
 
 class AddWordBottomSheet: UIViewController {
     
-    //    var selectedCategory: Category? {
-    //        didSet {
-    //            loadSortedWords()
-    //        }
-    //    }
+    private var userWord: UserWord?
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    //    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    //    private let request: NSFetchRequest <Word> = Word.fetchRequest()
-    //
     private func anyTextView(_ placeholder: String) -> UITextView {
         let textView = UITextView()
         textView.addPlaceholder(text: placeholder)
@@ -34,7 +28,7 @@ class AddWordBottomSheet: UIViewController {
         
         return textView
     }
-
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Add your new word"
@@ -43,9 +37,9 @@ class AddWordBottomSheet: UIViewController {
         label.textAlignment = .center
         return label
     }()
-
-    private lazy var newWordTextField = anyTextView("Enter new word")
-    private lazy var translationTextField = anyTextView("Enter word's translation")
+    
+    private lazy var newWordTextView = anyTextView("Enter new word")
+    private lazy var translationTextView = anyTextView("Enter word's translation")
     private lazy var exampleTextView = anyTextView("Enter your example")
     
     private lazy var addButton: UIButton = {
@@ -58,17 +52,17 @@ class AddWordBottomSheet: UIViewController {
         button.addTarget(self, action: #selector(addWordToUserDictionary), for: .touchUpInside)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-
+    
     private func setupViews() {
         
         view.backgroundColor = .white
         
-        [titleLabel, newWordTextField, translationTextField, exampleTextView, addButton].forEach {
+        [titleLabel, newWordTextView, translationTextView, exampleTextView, addButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -78,17 +72,17 @@ class AddWordBottomSheet: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            newWordTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            newWordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            newWordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            newWordTextField.heightAnchor.constraint(equalToConstant: 56),
+            newWordTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            newWordTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            newWordTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            newWordTextView.heightAnchor.constraint(equalToConstant: 56),
             
-            translationTextField.topAnchor.constraint(equalTo: newWordTextField.bottomAnchor, constant: 16),
-            translationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            translationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            translationTextField.heightAnchor.constraint(equalToConstant: 56),
+            translationTextView.topAnchor.constraint(equalTo: newWordTextView.bottomAnchor, constant: 16),
+            translationTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            translationTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            translationTextView.heightAnchor.constraint(equalToConstant: 56),
             
-            exampleTextView.topAnchor.constraint(equalTo: translationTextField.bottomAnchor, constant: 16),
+            exampleTextView.topAnchor.constraint(equalTo: translationTextView.bottomAnchor, constant: 16),
             exampleTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             exampleTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             exampleTextView.heightAnchor.constraint(equalToConstant: 120),
@@ -99,15 +93,28 @@ class AddWordBottomSheet: UIViewController {
             addButton.heightAnchor.constraint(equalToConstant: 56),
         ])
     }
-
+    
     @objc private func addWordToUserDictionary() {
-        // Get the input values from text fields
-        let userVC = UserDictionaryViewController()
-        print(userVC.words, userVC.filteredWords, userVC.sections, userVC.wordDictionary)
         
-        let newWord = NewWordModel(text: newWordTextField.text ?? "", translation: translationTextField.text ?? "", example: exampleTextView.text ?? "")
+        let userDictionary = UserDictionaryViewController()
+        let newWord = NewWordModel(text: newWordTextView.text ?? "", translation: translationTextView.text ?? "", example: exampleTextView.text ?? "")
         
-        // Add newWord to your dictionary or perform any necessary actions
+        userWord = UserWord(context: context)
+        userWord?.text = newWord.text
+        userWord?.translation = newWord.translation
+        userWord?.example = newWord.example
+        
+        func saveWordInfo() {
+            do {
+                try context.save()
+                print("Word saved successfully!")
+            } catch {
+                print("Error saving word: \(error)")
+            }
+
+            userDictionary.tableView.reloadData()
+        }
+        saveWordInfo()
         
         dismiss(animated: true, completion: nil)
     }

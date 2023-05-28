@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
+        
+    private var wordsArray = [UserWord]()
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let request: NSFetchRequest <UserWord> = UserWord.fetchRequest()
     
     var words: [String] = []
     var filteredWords: [String] = []
@@ -49,16 +54,11 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         // register cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Keys.userCell)
         
-        loadSortedWords()
+        loadWords()
         groupWords()
     }
     
     // MARK: - Model Manipulation Methods
-    
-    func loadSortedWords() {
-        ["apple", "whiskey", "bar", "milk"].forEach { words.append($0) }
-        words.sort { $0 < $1 }
-    }
     
     func groupWords() {
         
@@ -79,6 +79,27 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         
     }
     
+    func loadWords() {
+        do {
+            wordsArray = try context.fetch(request)
+            
+            // Очищаем массив words перед загрузкой новых слов
+            words.removeAll()
+            
+            // Заполняем массив words значениями из базы данных
+            for word in wordsArray {
+                if let wordText = word.text {
+                    words.append(wordText)
+                }
+            }
+            
+        } catch {
+            print("Error loading categories \(error)")
+        }
+
+        tableView.reloadData()
+    }
+
     // MARK: - UITableView DataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -132,8 +153,15 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let editBottomSheet = EditBottomSheet()
+        if let cell = tableView.cellForRow(at: indexPath) {
+            let title = cell.textLabel?.text ?? "No word"
+            editBottomSheet.titleLabel.text = title
+            editBottomSheet.newWordTextField.text = title
+        }
         
-        Templates().showBottomSheet(self, bottomSheet: editBottomSheet())
+        Templates().showBottomSheet(self, bottomSheet: editBottomSheet)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -172,65 +200,3 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         navigationController?.pushViewController(dictionaryVC, animated: true)
     }
 }
-
-// MARK: - 2nd version
-        
-//        // navigationBar
-//        title = "Let’s add a new word! 😜"
-//        navigationItem.rightBarButtonItem = addButton
-//        setupSearchController()
-//    
-//    // MARK: - Model Manipulation Methods
-//    
-//    func saveWords() {
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Error saving context, \(error)")
-//        }
-//        
-//        self.tableView.reloadData()
-//    }
-//        
-//    func loadSortedWords(with predicate: NSPredicate? = nil) {
-//
-//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-//        
-//        if let additionalPredicate = predicate {
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates:
-//                                                        [categoryPredicate, additionalPredicate])
-//        } else {
-//            request.predicate = categoryPredicate
-//        }
-//
-//        do {
-//            words = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context \(error)")
-//        }
-//
-//        words.sort { $0.text < $1.text }
-//        tableView.reloadData()
-//    }
-//    
-// MARK: - UISearchBarDelegate
-
-//func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//    let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text ?? "Search has no text")
-//
-//    request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//    loadItems(with: predicate)
-//}
-//
-//func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//    if searchText.isEmpty {
-//        loadItems()
-//        DispatchQueue.main.async {
-//            searchBar.resignFirstResponder()
-//        }
-//    } else {
-//        searchBarSearchButtonClicked(searchBar)
-//    }
-//}

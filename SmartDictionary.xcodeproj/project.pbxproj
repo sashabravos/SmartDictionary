@@ -26,7 +26,8 @@
 		035E07042A1AD9B7008D9EA2 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */; };
 		035E070B2A201952008D9EA2 /* WordBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E070A2A201952008D9EA2 /* WordBase.swift */; };
 		035E07142A212DCC008D9EA2 /* AddWordBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */; };
-		035E071B2A22CC12008D9EA2 /* editBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */; };
+		035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */; };
+		035E071E2A239B1D008D9EA2 /* WordInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071D2A239B1D008D9EA2 /* WordInfo.swift */; };
 		848C7AFEB0744AB129752CEC /* Pods_SmartDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +53,8 @@
 		035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
 		035E070A2A201952008D9EA2 /* WordBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBase.swift; sourceTree = "<group>"; };
 		035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordBottomSheet.swift; sourceTree = "<group>"; };
-		035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editBottomSheet.swift; sourceTree = "<group>"; };
+		035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBottomSheet.swift; sourceTree = "<group>"; };
+		035E071D2A239B1D008D9EA2 /* WordInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfo.swift; sourceTree = "<group>"; };
 		10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.debug.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.debug.xcconfig"; sourceTree = "<group>"; };
 		ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.release.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				034EDEF42A12CFC600DD1087 /* DictionaryData.xcdatamodeld */,
 				034EDF132A14233200DD1087 /* NewWordModel.swift */,
+				035E071D2A239B1D008D9EA2 /* WordInfo.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -191,7 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */,
-				035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */,
+				035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */,
 			);
 			path = BottomSheets;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				034EDF122A14226100DD1087 /* DictionaryCell.swift in Sources */,
 				035E07042A1AD9B7008D9EA2 /* DictionaryModel.swift in Sources */,
 				034EDEF02A12CFC600DD1087 /* UserDictionaryViewController.swift in Sources */,
+				035E071E2A239B1D008D9EA2 /* WordInfo.swift in Sources */,
 				035E06FB2A1AD32D008D9EA2 /* Templates.swift in Sources */,
 				034EDF072A12DB1B00DD1087 /* WelcomeViewController.swift in Sources */,
 				034EDEF62A12CFC600DD1087 /* DictionaryData.xcdatamodeld in Sources */,
@@ -326,7 +330,7 @@
 				034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */,
 				035E07022A1AD993008D9EA2 /* DictionaryAPIData.swift in Sources */,
 				035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */,
-				035E071B2A22CC12008D9EA2 /* editBottomSheet.swift in Sources */,
+				035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
