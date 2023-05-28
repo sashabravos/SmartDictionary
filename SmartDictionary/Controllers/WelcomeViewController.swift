@@ -79,5 +79,3 @@ class WelcomeViewController: UIViewController {
 
     }
 }
-
-

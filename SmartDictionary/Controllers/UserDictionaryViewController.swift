@@ -5,15 +5,16 @@
 //  Created by Александра Кострова on 15.05.2023.
 //
 
-
 import UIKit
 import CoreData
 
 class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
-        
+    
+    let editBottomSheet = EditBottomSheet()
     private var wordsArray = [UserWord]()
+    private var words: [String] = []
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private let request: NSFetchRequest <UserWord> = UserWord.fetchRequest()
+    private let request: NSFetchRequest<UserWord> = UserWord.fetchRequest()
     
     var wordDictionary: [String: [String]] = [:]
         
@@ -30,7 +31,8 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     }()
     
     private lazy var dictionaryButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "Dictionary", style: .plain, target: self, action: #selector(goToDictionary))
+        let button = UIBarButtonItem(title: "Dictionary", style: .plain,
+                                     target: self, action: #selector(goToDictionary))
         button.tintColor = .label
         return button
     }()
@@ -38,7 +40,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup navigationBar items
+        // Setup navigationBar items
         title = "Your words 😜"
         navigationController?.navigationBar.prefersLargeTitles = true
 
@@ -49,8 +51,10 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // register cell
-        tableView.register(UserCell.self , forCellReuseIdentifier: Keys.userCell)
+        editBottomSheet.delegate = self
+        
+        // Register cell
+        tableView.register(UserCell.self, forCellReuseIdentifier: Keys.userCell)
         
         loadWords()
         groupWords()
@@ -59,8 +63,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Model Manipulation Methods
     
     func groupWords() {
-        
-        // grouping words by first letter
+        // Grouping words by first letter
         for word in wordsArray {
             if let wordText = word.text {
                 let firstLetter = String(wordText.prefix(1)).uppercased()
@@ -73,12 +76,33 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             }
         }
         
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SectionUpdated"),
+                                               object: nil, queue: nil) { [weak self] notification in
+            if let sectionKey = notification.object as? String {
+                if let sectionIndex = Array(self?.wordDictionary.keys.sorted() ?? []).firstIndex(of: sectionKey) {
+                    if let wordCount = self?.wordDictionary[sectionKey]?.count, wordCount == 0 {
+                        self?.wordDictionary.removeValue(forKey: sectionKey)
+                        self?.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+                    } else {
+                        self?.updateSectionState(sectionKey: sectionKey)
+                    }
+                }
+            }
+        }
+        
         tableView.reloadData()
+    }
+    
+    func updateSectionState(sectionKey: String) {
+        if let sectionIndex = Array(wordDictionary.keys.sorted()).firstIndex(of: sectionKey) {
+            tableView.reloadSections(IndexSet(integer: sectionIndex), with: .none)
+        }
     }
     
     func loadWords() {
         do {
             wordsArray = try context.fetch(request)
+            words = wordsArray.compactMap { $0.text }
         } catch {
             print("Error loading categories \(error)")
         }
@@ -122,6 +146,14 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCell.EditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteWord(at: indexPath)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath) as! UserCell
         let word: String
@@ -138,10 +170,15 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             cell.configure(with: userWord)
         }
 
+        // Добавьте кнопку удаления
+        cell.showsDeleteButton = true
+        cell.deleteButtonAction = { [weak self] in
+            self?.deleteWord(at: indexPath)
+        }
+
         return cell
     }
 
-    
     // MARK: - Tableview Delegate Methods
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -151,6 +188,10 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             editBottomSheet.newWordTextView.text = cell.cellTitle
             editBottomSheet.translationTextView.text = cell.cellTitleTranslation
             editBottomSheet.exampleTextView.text = cell.cellTitleExample
+            
+            if let word = wordsArray.first(where: { $0.text == cell.cellTitle }) {
+                editBottomSheet.userWord = word
+            }
             
             Templates().showBottomSheet(self, bottomSheet: editBottomSheet)
         } else {
@@ -224,11 +265,69 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Button Actions
     
     @objc private func showAddWordBottomSheet() {
-        Templates().showBottomSheet(self, bottomSheet: AddWordBottomSheet())
+        let addWordBottomSheet = AddWordBottomSheet()
+        addWordBottomSheet.delegate = self
+        Templates().showBottomSheet(self, bottomSheet: addWordBottomSheet)
+    }
+
+    func addWord(_ word: UserWord) {
+        if let wordText = word.text {
+            wordsArray.append(word)
+            words.append(wordText)
+            
+            groupNewWord(wordText)
+            
+            tableView.reloadData()
+        }
+    }
+    
+    func deleteWord(at indexPath: IndexPath) {
+        let sectionKey = Array(wordDictionary.keys.sorted())[indexPath.section]
+        guard let word = wordDictionary[sectionKey]?[indexPath.row] else {
+            return
+        }
+
+        if let userWord = wordsArray.first(where: { $0.text == word }) {
+            context.delete(userWord)
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            wordsArray.remove(at: indexPath.row)
+        }
+
+        wordDictionary[sectionKey]?.remove(at: indexPath.row)
+        if wordDictionary[sectionKey]?.isEmpty == true {
+            wordDictionary.removeValue(forKey: sectionKey)
+            tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    func groupNewWord(_ word: String) {
+        let firstLetter = String(word.prefix(1)).uppercased()
+        
+        if var wordGroup = wordDictionary[firstLetter] {
+            wordGroup.append(word)
+            wordDictionary[firstLetter] = wordGroup
+        } else {
+            wordDictionary[firstLetter] = [word]
+        }
     }
     
     @objc func goToDictionary() {
         let dictionaryVC = DictionaryViewController()
         navigationController?.pushViewController(dictionaryVC, animated: true)
+    }
+}
+
+extension UserDictionaryViewController: AddWordBottomSheetDelegate {
+}
+
+extension UserDictionaryViewController: EditBottomSheetDelegate {
+    func updateWord(_ word: UserWord) {
+        if let index = wordsArray.firstIndex(of: word) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
+        // Сохраните изменения в CoreData
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
 }

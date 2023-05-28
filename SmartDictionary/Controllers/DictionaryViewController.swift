@@ -49,7 +49,9 @@ class DictionaryViewController: UITableViewController {
     
     func filterWords(for searchText: String?) {
         if let searchText = searchText, !searchText.isEmpty {
-            filteredDictionaryItems = dictionaryItems.filter { $0.currentWord.lowercased().contains(searchText.lowercased()) }
+            filteredDictionaryItems = dictionaryItems.filter {
+                $0.currentWord.lowercased().contains(searchText.lowercased())
+            }
         } else {
             filteredDictionaryItems = dictionaryItems
         }
@@ -133,4 +135,3 @@ extension DictionaryViewController: DictionaryManagerDelegate {
         print("Error loading data: \(error)")
     }
 }
-

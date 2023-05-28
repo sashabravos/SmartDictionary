@@ -16,7 +16,6 @@ final class DictionaryCell: UITableViewCell {
     private lazy var translationLabel = UILabel()
     lazy var addButton = UIButton()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -65,8 +64,6 @@ final class DictionaryCell: UITableViewCell {
         transcriptionLabel.text = dictionaryItem.transcription
         translationLabel.text = dictionaryItem.translation
     }
-    
-    
 }
 
 // MARK: - Private Extensions

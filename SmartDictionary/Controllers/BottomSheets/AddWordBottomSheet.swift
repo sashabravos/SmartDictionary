@@ -8,8 +8,13 @@
 import UIKit
 import CoreData
 
+protocol AddWordBottomSheetDelegate: AnyObject {
+    func addWord(_ word: UserWord)
+}
+
 class AddWordBottomSheet: UIViewController {
     
+    weak var delegate: AddWordBottomSheetDelegate?
     private var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -90,34 +95,28 @@ class AddWordBottomSheet: UIViewController {
             addButton.topAnchor.constraint(equalTo: exampleTextView.bottomAnchor, constant: 15),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            addButton.heightAnchor.constraint(equalToConstant: 56),
+            addButton.heightAnchor.constraint(equalToConstant: 56)
         ])
-    }
-    
-    func saveWordInfo() {
-        let userDictionary = UserDictionaryViewController()
-        
-        do {
-            try context.save()
-            print("Word saved successfully!")
-        } catch {
-            print("Error saving word: \(error)")
-        }
-        
-        userDictionary.tableView.reloadData()
     }
     
     @objc private func addWordToUserDictionary() {
         
-        let newWord = NewWordModel(text: newWordTextView.text ?? "", translation: translationTextView.text ?? "", example: exampleTextView.text ?? "")
+        guard let newWord = newWordTextView.text, !newWord.isEmpty else {
+            return
+        }
         
-        userWord = UserWord(context: context)
-        userWord?.text = newWord.text.lowercased()
-        userWord?.translation = newWord.translation
-        userWord?.example = newWord.example
+        let userWord = UserWord(context: context)
+        userWord.text = newWord
+        userWord.translation = translationTextView.text
+        userWord.example = exampleTextView.text
         
-        saveWordInfo()
-        
-        dismiss(animated: true, completion: nil)
+        do {
+            try context.save()
+            delegate?.addWord(userWord)
+            
+            dismiss(animated: true, completion: nil)
+        } catch {
+            print("Failed to save word: \(error)")
+        }
     }
 }

@@ -5,13 +5,18 @@
 //  Created by Александра Кострова on 28.05.2023.
 //
 
-
-
 import UIKit
 import CoreData
 
+protocol EditBottomSheetDelegate: AnyObject {
+    func updateWord(_ word: UserWord)
+}
+
 class EditBottomSheet: UIViewController {
     
+    weak var delegate: EditBottomSheetDelegate?
+    
+    var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private func anyTextView() -> UITextView {
@@ -48,17 +53,23 @@ class EditBottomSheet: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(red: 0.31, green: 0.75, blue: 0.63, alpha: 1.0)
         button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(updateWordInfo), for: .touchUpInside)
+        button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        if let word = userWord {
+            titleLabel.text = word.text
+            translationTextView.text = word.translation
+            exampleTextView.text = word.example
+        }
     }
     
     private func setupViews() {
-                
+        
         view.backgroundColor = .white
         
         [titleLabel, newWordTextView, translationTextView, exampleTextView, updateButton].forEach {
@@ -89,12 +100,24 @@ class EditBottomSheet: UIViewController {
             updateButton.topAnchor.constraint(equalTo: exampleTextView.bottomAnchor, constant: 15),
             updateButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             updateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            updateButton.heightAnchor.constraint(equalToConstant: 56),
+            updateButton.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
     
-    @objc private func updateWordInfo() {
-        AddWordBottomSheet().saveWordInfo()
-        dismiss(animated: true, completion: nil)
+    @objc private func updateButtonTapped() {
+        guard let word = userWord else { return }
+        word.text = titleLabel.text
+        word.translation = translationTextView.text
+        word.example = exampleTextView.text
+
+        delegate?.updateWord(word)
+        
+        do {
+                try context.save() 
+            } catch {
+                print("Error saving context: \(error)")
+            }
+        
+        dismiss(animated: true)
     }
 }

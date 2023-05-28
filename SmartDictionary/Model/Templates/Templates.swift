@@ -22,17 +22,6 @@ class Templates {
         
         currentViewController.present(nav, animated: true, completion: nil)
     }
-    
-//    public func saveWordInfo(_ context: NSManagedObjectContext) {
-//        do {
-//            try context.save()
-//            print("Word saved successfully!")
-//        } catch {
-//            print("Error saving word: \(error)")
-//        }
-//
-//        UserDictionaryViewController().tableView.reloadData()
-//    }
 }
 
 extension UITextView {
@@ -56,7 +45,8 @@ extension UITextView {
         
         placeholderLabel.isHidden = !self.text.isEmpty
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextView.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange),
+                                               name: UITextView.textDidChangeNotification, object: nil)
     }
     
     @objc private func textDidChange() {
@@ -65,4 +55,3 @@ extension UITextView {
         }
     }
 }
-
