@@ -52,7 +52,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // register cell
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Keys.userCell)
+        tableView.register(UserCell.self , forCellReuseIdentifier: Keys.userCell)
         
         loadWords()
         groupWords()
@@ -136,7 +136,7 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath) as! UserCell
         let word: String
         if isSearchActive() {
             word = filteredWords[indexPath.row]
@@ -144,24 +144,31 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             let sectionKey = sections[indexPath.section]
             word = wordDictionary[sectionKey]![indexPath.row]
         }
-        
+
         cell.textLabel?.text = word
-        
+        if let userWord = wordsArray.first(where: { $0.text == word }) {
+            cell.configure(with: userWord)
+        }
+
         return cell
     }
+
     
     // MARK: - Tableview Delegate Methods
-    
+        
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let editBottomSheet = EditBottomSheet()
-        if let cell = tableView.cellForRow(at: indexPath) {
-            let title = cell.textLabel?.text ?? "No word"
-            editBottomSheet.titleLabel.text = title
-            editBottomSheet.newWordTextField.text = title
+        if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
+            let editBottomSheet = EditBottomSheet()
+            editBottomSheet.titleLabel.text = cell.cellTitle
+            editBottomSheet.newWordTextView.text = cell.cellTitle
+            editBottomSheet.translationTextView.text = cell.cellTitleTranslation
+            editBottomSheet.exampleTextView.text = cell.cellTitleExample
+            
+            Templates().showBottomSheet(self, bottomSheet: editBottomSheet)
+        } else {
+            print("Failed to get UserCell")
         }
         
-        Templates().showBottomSheet(self, bottomSheet: editBottomSheet)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

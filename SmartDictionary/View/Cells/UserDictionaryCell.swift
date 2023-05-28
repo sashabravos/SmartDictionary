@@ -11,21 +11,21 @@ class UserCell: UITableViewCell {
     
     static let identifier = Keys.userCell
     
-    let cellTitle = ""
-    let cellTitleTranslation = ""
-    let cellTitleExample = ""
+    var cellTitle: String?
+    var cellTitleTranslation: String?
+    var cellTitleExample: String?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        setSubViews()
+        super.init(style: style, reuseIdentifier: reuseIdentifier)        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setSubViews() {
-        contentView.backgroundColor = .white
+    func configure(with word: UserWord) {
+        cellTitle = word.text
+        cellTitleTranslation = word.translation
+        cellTitleExample = word.example
     }
 }

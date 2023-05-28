@@ -40,8 +40,8 @@ class EditBottomSheet: UIViewController {
         return label
     }()
     
-    lazy var newWordTextField = anyTextView()
-    lazy var translationTextField = anyTextView()
+    lazy var newWordTextView = anyTextView()
+    lazy var translationTextView = anyTextView()
     lazy var exampleTextView = anyTextView()
     
     private lazy var updateButton: UIButton = {
@@ -64,7 +64,7 @@ class EditBottomSheet: UIViewController {
                 
         view.backgroundColor = .white
         
-        [titleLabel, newWordTextField, translationTextField, exampleTextView, updateButton].forEach {
+        [titleLabel, newWordTextView, translationTextView, exampleTextView, updateButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -74,17 +74,17 @@ class EditBottomSheet: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            newWordTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            newWordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            newWordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            newWordTextField.heightAnchor.constraint(equalToConstant: 56),
+            newWordTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            newWordTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            newWordTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            newWordTextView.heightAnchor.constraint(equalToConstant: 56),
             
-            translationTextField.topAnchor.constraint(equalTo: newWordTextField.bottomAnchor, constant: 16),
-            translationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            translationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            translationTextField.heightAnchor.constraint(equalToConstant: 56),
+            translationTextView.topAnchor.constraint(equalTo: newWordTextView.bottomAnchor, constant: 16),
+            translationTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            translationTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            translationTextView.heightAnchor.constraint(equalToConstant: 56),
             
-            exampleTextView.topAnchor.constraint(equalTo: translationTextField.bottomAnchor, constant: 16),
+            exampleTextView.topAnchor.constraint(equalTo: translationTextView.bottomAnchor, constant: 16),
             exampleTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             exampleTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             exampleTextView.heightAnchor.constraint(equalToConstant: 120),
