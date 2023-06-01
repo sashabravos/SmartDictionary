@@ -8,24 +8,46 @@
 import UIKit
 import CoreData
 
-class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
+final class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
     
-    let editBottomSheet = EditBottomSheet()
-    private var wordsArray = [UserWord]()
-    private var words: [String] = []
+    // MARK: - Properties
+    
+    private let editBottomSheet = EditBottomSheet()
+    
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let request: NSFetchRequest<UserWord> = UserWord.fetchRequest()
-    
-    var wordDictionary: [String: [String]] = [:]
-        
+
+    private var words: [String] = []
+    private var wordsArray = [UserWord]()
+    private var wordDictionary: [String: [String]] = [:]
+
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search"
         return searchController
     }()
     
+    private lazy var floatingButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "buttonIcon"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+            if let window = UIApplication.shared.windows.first {
+                window.addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.trailingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -26),
+                    button.bottomAnchor.constraint(equalTo: window.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+                    button.widthAnchor.constraint(equalToConstant: 65),
+                    button.heightAnchor.constraint(equalToConstant: 65)
+                ])
+            }
+        return button
+    }()
+    
+    // MARK: - Bar Button Items
+    
     private lazy var addButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddWordBottomSheet))
+        let button = UIBarButtonItem(title: "Gallery", style: .plain, target: self,
+                                     action: #selector(showAddWordBottomSheet))
         button.tintColor = .label
         return button
     }()
@@ -36,6 +58,8 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         button.tintColor = .label
         return button
     }()
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,12 +80,25 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         // Register cell
         tableView.register(UserCell.self, forCellReuseIdentifier: Keys.userCell)
         
+        floatingButton.addTarget(self, action: #selector(showAddWordBottomSheet), for: .touchUpInside)
+        
         loadWords()
         groupWords()
     }
     
     // MARK: - Model Manipulation Methods
     
+    func loadWords() {
+        do {
+            wordsArray = try context.fetch(request)
+            words = wordsArray.compactMap { $0.text }
+        } catch {
+            print("Error loading categories \(error)")
+        }
+
+        tableView.reloadData()
+    }
+
     func groupWords() {
         // Grouping words by first letter
         for word in wordsArray {
@@ -99,17 +136,6 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
-    func loadWords() {
-        do {
-            wordsArray = try context.fetch(request)
-            words = wordsArray.compactMap { $0.text }
-        } catch {
-            print("Error loading categories \(error)")
-        }
-
-        tableView.reloadData()
-    }
-
     // MARK: - UITableView DataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -170,12 +196,12 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
             cell.configure(with: userWord)
         }
 
-        // Добавьте кнопку удаления
+        // Delete button
         cell.showsDeleteButton = true
         cell.deleteButtonAction = { [weak self] in
             self?.deleteWord(at: indexPath)
         }
-
+        
         return cell
     }
 
@@ -261,24 +287,21 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         
         return wordDictionary
     }
+        
+ // MARK: - Button's action
     
-    // MARK: - Button Actions
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            floatingButton.isHidden = true
+        } else {
+            floatingButton.isHidden = false
+        }
+    }
     
     @objc private func showAddWordBottomSheet() {
         let addWordBottomSheet = AddWordBottomSheet()
         addWordBottomSheet.delegate = self
         Templates().showBottomSheet(self, bottomSheet: addWordBottomSheet)
-    }
-
-    func addWord(_ word: UserWord) {
-        if let wordText = word.text {
-            wordsArray.append(word)
-            words.append(wordText)
-            
-            groupNewWord(wordText)
-            
-            tableView.reloadData()
-        }
     }
     
     func deleteWord(at indexPath: IndexPath) {
@@ -311,23 +334,38 @@ class UserDictionaryViewController: UITableViewController, UISearchBarDelegate {
         } else {
             wordDictionary[firstLetter] = [word]
         }
+        
+        updateSectionState(sectionKey: firstLetter)
     }
     
-    @objc func goToDictionary() {
-        let dictionaryVC = DictionaryViewController()
-        navigationController?.pushViewController(dictionaryVC, animated: true)
+    @objc private func goToDictionary() {
+        let dictionaryViewController = DictionaryViewController()
+        navigationController?.pushViewController(dictionaryViewController, animated: true)
     }
 }
 
+// MARK: - AddWordBottomSheetDelegate
+
 extension UserDictionaryViewController: AddWordBottomSheetDelegate {
+    func addWord(_ word: UserWord) {
+        if let wordText = word.text {
+            wordsArray.append(word)
+            words.append(wordText)
+            
+            groupNewWord(wordText)
+            
+            tableView.reloadData()
+        }
+    }
 }
+
+// MARK: - EditBottomSheetDelegate
 
 extension UserDictionaryViewController: EditBottomSheetDelegate {
     func updateWord(_ word: UserWord) {
-        if let index = wordsArray.firstIndex(of: word) {
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        if let wordText = word.text, let index = words.firstIndex(of: wordText) {
+            wordsArray[index] = word
+            groupWords()
         }
-        // Сохраните изменения в CoreData
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
 }

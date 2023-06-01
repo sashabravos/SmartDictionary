@@ -10,7 +10,6 @@
 		034EDEEC2A12CFC600DD1087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */; };
 		034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */; };
 		034EDEF02A12CFC600DD1087 /* UserDictionaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */; };
-		034EDEF32A12CFC600DD1087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF12A12CFC600DD1087 /* Main.storyboard */; };
 		034EDEF62A12CFC600DD1087 /* DictionaryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEF42A12CFC600DD1087 /* DictionaryData.xcdatamodeld */; };
 		034EDEF82A12CFC700DD1087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF72A12CFC700DD1087 /* Assets.xcassets */; };
 		034EDEFB2A12CFC700DD1087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034EDEF92A12CFC700DD1087 /* LaunchScreen.storyboard */; };
@@ -26,7 +25,7 @@
 		035E07042A1AD9B7008D9EA2 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */; };
 		035E070B2A201952008D9EA2 /* WordBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E070A2A201952008D9EA2 /* WordBase.swift */; };
 		035E07142A212DCC008D9EA2 /* AddWordBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */; };
-		035E071B2A22CC12008D9EA2 /* editBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */; };
+		035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */; };
 		848C7AFEB0744AB129752CEC /* Pods_SmartDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +34,6 @@
 		034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
-		034EDEF22A12CFC600DD1087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		034EDEF52A12CFC600DD1087 /* SmartDictionary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartDictionary.xcdatamodel; sourceTree = "<group>"; };
 		034EDEF72A12CFC700DD1087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		034EDEFA2A12CFC700DD1087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,7 +50,7 @@
 		035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
 		035E070A2A201952008D9EA2 /* WordBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBase.swift; sourceTree = "<group>"; };
 		035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordBottomSheet.swift; sourceTree = "<group>"; };
-		035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editBottomSheet.swift; sourceTree = "<group>"; };
+		035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBottomSheet.swift; sourceTree = "<group>"; };
 		10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.debug.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.debug.xcconfig"; sourceTree = "<group>"; };
 		ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.release.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.release.xcconfig"; sourceTree = "<group>"; };
@@ -94,8 +92,8 @@
 				034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */,
 				034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */,
 				034EDF0A2A14156000DD1087 /* Model */,
-				034EDF102A141FF500DD1087 /* View */,
-				034EDF0F2A141FCB00DD1087 /* Controllers */,
+				034EDF102A141FF500DD1087 /* Views */,
+				034EDF0F2A141FCB00DD1087 /* ViewControllers */,
 				035E06F92A1931D0008D9EA2 /* Support Files */,
 				034EDEFC2A12CFC700DD1087 /* Info.plist */,
 			);
@@ -105,14 +103,14 @@
 		034EDF0A2A14156000DD1087 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				035E06FE2A1AD906008D9EA2 /* Yandex.dictionary API */,
+				035E06FE2A1AD906008D9EA2 /* Dictionary */,
 				035E06FC2A1AD855008D9EA2 /* CoreData */,
 				035E07102A20E030008D9EA2 /* Templates */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		034EDF0F2A141FCB00DD1087 /* Controllers */ = {
+		034EDF0F2A141FCB00DD1087 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */,
@@ -120,16 +118,15 @@
 				034EDF0D2A141F4100DD1087 /* DictionaryViewController.swift */,
 				035E071C2A22CC1C008D9EA2 /* BottomSheets */,
 			);
-			path = Controllers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		034EDF102A141FF500DD1087 /* View */ = {
+		034EDF102A141FF500DD1087 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				035E06FD2A1AD89C008D9EA2 /* Cells */,
-				034EDEF12A12CFC600DD1087 /* Main.storyboard */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		035E06F92A1931D0008D9EA2 /* Support Files */ = {
@@ -159,14 +156,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		035E06FE2A1AD906008D9EA2 /* Yandex.dictionary API */ = {
+		035E06FE2A1AD906008D9EA2 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
 				035E06FF2A1AD955008D9EA2 /* DictionaryManager.swift */,
 				035E07012A1AD993008D9EA2 /* DictionaryAPIData.swift */,
 				035E07032A1AD9B7008D9EA2 /* DictionaryModel.swift */,
 			);
-			path = "Yandex.dictionary API";
+			path = Dictionary;
 			sourceTree = "<group>";
 		};
 		035E07102A20E030008D9EA2 /* Templates */ = {
@@ -183,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				035E07132A212DCC008D9EA2 /* AddWordBottomSheet.swift */,
-				035E071A2A22CC12008D9EA2 /* editBottomSheet.swift */,
+				035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */,
 			);
 			path = BottomSheets;
 			sourceTree = "<group>";
@@ -267,7 +264,6 @@
 			files = (
 				034EDEFB2A12CFC700DD1087 /* LaunchScreen.storyboard in Resources */,
 				034EDEF82A12CFC700DD1087 /* Assets.xcassets in Resources */,
-				034EDEF32A12CFC600DD1087 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,21 +333,13 @@
 				034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */,
 				035E07022A1AD993008D9EA2 /* DictionaryAPIData.swift in Sources */,
 				035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */,
-				035E071B2A22CC12008D9EA2 /* editBottomSheet.swift in Sources */,
+				035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		034EDEF12A12CFC600DD1087 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				034EDEF22A12CFC600DD1087 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		034EDEF92A12CFC700DD1087 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -490,7 +478,6 @@
 				INFOPLIST_FILE = SmartDictionary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -519,7 +506,6 @@
 				INFOPLIST_FILE = SmartDictionary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
