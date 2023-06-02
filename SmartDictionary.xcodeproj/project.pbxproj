@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030A11B62A28F954009D2E69 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A11B52A28F954009D2E69 /* GalleryViewController.swift */; };
+		030A11B82A28FF03009D2E69 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A11B72A28FF03009D2E69 /* ImageCell.swift */; };
 		034EDEEC2A12CFC600DD1087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */; };
 		034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */; };
 		034EDEF02A12CFC600DD1087 /* UserDictionaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030A11B52A28F954009D2E69 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		030A11B72A28FF03009D2E69 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		034EDEE82A12CFC600DD1087 /* SmartDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				034EDF062A12DB1B00DD1087 /* WelcomeViewController.swift */,
 				034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */,
 				034EDF0D2A141F4100DD1087 /* DictionaryViewController.swift */,
+				030A11B52A28F954009D2E69 /* GalleryViewController.swift */,
 				035E071C2A22CC1C008D9EA2 /* BottomSheets */,
 			);
 			path = ViewControllers;
@@ -152,6 +157,7 @@
 			children = (
 				034EDF082A14154100DD1087 /* UserCell.swift */,
 				034EDF112A14226100DD1087 /* DictionaryCell.swift */,
+				030A11B72A28FF03009D2E69 /* ImageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -332,6 +338,8 @@
 				034EDF142A14233200DD1087 /* NewWordModel.swift in Sources */,
 				034EDEEE2A12CFC600DD1087 /* SceneDelegate.swift in Sources */,
 				035E07022A1AD993008D9EA2 /* DictionaryAPIData.swift in Sources */,
+				030A11B82A28FF03009D2E69 /* ImageCell.swift in Sources */,
+				030A11B62A28F954009D2E69 /* GalleryViewController.swift in Sources */,
 				035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */,
 				035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */,
 			);

@@ -47,7 +47,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     
     private lazy var addButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Gallery", style: .plain, target: self,
-                                     action: #selector(showAddWordBottomSheet))
+                                     action: #selector(goToGallery))
         button.tintColor = .label
         return button
     }()
@@ -298,6 +298,16 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         }
     }
     
+    @objc private func goToDictionary() {
+        let dictionaryViewController = DictionaryViewController()
+        navigationController?.pushViewController(dictionaryViewController, animated: true)
+    }
+    
+    @objc private func goToGallery() {
+        let galleryViewController = GalleryViewController()
+        navigationController?.pushViewController(galleryViewController, animated: true)
+    }
+    
     @objc private func showAddWordBottomSheet() {
         let addWordBottomSheet = AddWordBottomSheet()
         addWordBottomSheet.delegate = self
@@ -336,11 +346,6 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         }
         
         updateSectionState(sectionKey: firstLetter)
-    }
-    
-    @objc private func goToDictionary() {
-        let dictionaryViewController = DictionaryViewController()
-        navigationController?.pushViewController(dictionaryViewController, animated: true)
     }
 }
 
