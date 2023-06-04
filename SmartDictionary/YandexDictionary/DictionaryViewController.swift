@@ -11,7 +11,8 @@ class DictionaryViewController: UITableViewController {
     
     var dictionaryManager = DictionaryManager()
     let englishWords = WordBase().wordsArray
-    
+    private let commonMethods = CommonMethods()
+
     var dictionaryItems: [DictionaryModel] = []
     var filteredDictionaryItems: [DictionaryModel] = []
     
@@ -105,7 +106,7 @@ class DictionaryViewController: UITableViewController {
     // MARK: - Button Action
     
     @objc private func addToUserDictionary() {
-        Templates().showBottomSheet(self, bottomSheet: AddWordBottomSheet())
+        commonMethods.showBottomSheet(self, bottomSheet: AddWordBottomSheet())
     }
 }
 

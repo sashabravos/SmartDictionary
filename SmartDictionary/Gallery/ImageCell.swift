@@ -14,7 +14,7 @@ import UIKit
 
 class ImageCell: UICollectionViewCell {
     
-    static let identifier = "ImageCell"
+    static let identifier = Keys.imageCell
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()

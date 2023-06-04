@@ -1,28 +1,11 @@
 //
-//  Templates.swift
+//  ClassExtensions.swift
 //  SmartDictionary
 //
-//  Created by Александра Кострова on 22.05.2023.
+//  Created by Александра Кострова on 04.06.2023.
 //
 
 import UIKit
-import CoreData
-
-class Templates {
-    
-    public func showBottomSheet(_ currentViewController: UIViewController, bottomSheet: UIViewController) {
-        let bottomSheet = bottomSheet
-        let nav = UINavigationController(rootViewController: bottomSheet)
-        nav.modalPresentationStyle = .pageSheet
-        
-        if let sheet = nav.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-        }
-        
-        currentViewController.present(nav, animated: true, completion: nil)
-    }
-}
 
 extension UITextView {
     
