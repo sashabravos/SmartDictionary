@@ -22,23 +22,45 @@ class GalleryViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var cameraButton: UIButton = {
+        let button = UIButton()
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular, scale: .large)
+        let largeCamera = UIImage(systemName: ImageNames.cameraButton, withConfiguration: largeConfig)
+        button.setImage(largeCamera, for: .normal)
+        button.backgroundColor = .clear
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     var cellWidth: CGFloat = 0
     var cellHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // setup navigationBar items
+        title = "Gallery"
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         view.addSubview(collectionView)
+        view.addSubview(cameraButton)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            cameraButton.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: -26),
+            cameraButton.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -42)
         ])
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        cameraButton.addTarget(self, action: #selector(showPopoverViewController), for: .touchUpInside)
         
         collectionView.backgroundColor = .white
     }
@@ -46,17 +68,18 @@ class GalleryViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // setup navigationBar items
-        title = "Gallery"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         let numberOfColumns: CGFloat = 3
-        let totalSpacing: CGFloat = 12 // Общий интервал между ячейками по горизонтали и вертикали
+        let totalSpacing: CGFloat = 12
         let availableWidth = collectionView.bounds.width - totalSpacing * numberOfColumns
-        print(collectionView.bounds.width, availableWidth)
         cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
-        print(cellWidth)
         cellHeight = 170
+    }
+    
+    @objc private func showPopoverViewController() {
+        let popVC = PopViewController()
+//        popVC.delegate = self
+        
+        present(popVC, animated: true)
     }
 }
 

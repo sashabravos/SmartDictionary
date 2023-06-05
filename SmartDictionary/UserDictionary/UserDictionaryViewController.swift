@@ -24,34 +24,17 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     
     private lazy var floatingButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: ImageNames.buttonIcon), for: .normal)
+        button.setImage(UIImage(named: ImageNames.plusButton), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-//        if windowScene?.windows.first == self.navigationController {
-//            if let window = windowScene?.windows.first {
-//                window.addSubview(button)
-//                NSLayoutConstraint.activate([
-//                    button.trailingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-//                    button.bottomAnchor.constraint(equalTo: window.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-//                    button.widthAnchor.constraint(equalToConstant: 65),
-//                    button.heightAnchor.constraint(equalToConstant: 65)
-//                ])
-//            }
-//        }
-//        return button
-//    }()
-        if let window = windowScene?.windows.first {
-                        window.addSubview(button)
-                        NSLayoutConstraint.activate([
-                            button.trailingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-                            button.bottomAnchor.constraint(equalTo: window.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-                            button.widthAnchor.constraint(equalToConstant: 65),
-                            button.heightAnchor.constraint(equalToConstant: 65)
-                        ])
-                    }
-                return button
-            }()
+        self.view.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
+            button.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            button.widthAnchor.constraint(equalToConstant: 65),
+            button.heightAnchor.constraint(equalToConstant: 65)
+        ])
+        return button
+    }()
     
     // MARK: - Bar Button Items
     
@@ -76,7 +59,8 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         
         viewModel.setViewController(self)
         
-        tableView.backgroundColor = UIColor(named: Colors.backgroundColor)
+        tableView.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.midKhaki)
         
         // Setup navigationBar items
         title = "Your words 😜"

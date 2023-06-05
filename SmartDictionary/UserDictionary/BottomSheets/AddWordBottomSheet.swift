@@ -15,45 +15,20 @@ protocol AddWordBottomSheetDelegate: AnyObject {
 class AddWordBottomSheet: UIViewController {
     
     weak var delegate: AddWordBottomSheetDelegate?
+    
     private var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    private func anyTextView(_ placeholder: String) -> UITextView {
-        let textView = UITextView()
-        textView.addPlaceholder(text: placeholder)
-        textView.font = UIFont.systemFont(ofSize: 20)
-        textView.textColor = .black
-        textView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
-        textView.isEditable = true
-        textView.isScrollEnabled = true
-        textView.layer.cornerRadius = 10
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.lightGray.cgColor
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 8, bottom: 4, right: 8)
-        
-        return textView
-    }
+    private var commonMethods = CommonMethods()
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Add your new word"
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }()
+    private lazy var titleLabel = commonMethods.bottomSheetTitleLabel("Add your new word")
     
-    private lazy var newWordTextView = anyTextView("Enter new word")
-    private lazy var translationTextView = anyTextView("Enter word's translation")
-    private lazy var exampleTextView = anyTextView("Enter your example")
+    private lazy var newWordTextView = commonMethods.anyTextView("Enter new word")
+    private lazy var translationTextView = commonMethods.anyTextView("Enter word's translation")
+    private lazy var exampleTextView = commonMethods.anyTextView("Enter your example")
     
     private lazy var addButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("ADD", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(red: 0.31, green: 0.75, blue: 0.63, alpha: 1.0)
-        button.layer.cornerRadius = 8
+        let button = commonMethods.bottomSheetBigButton(title: "ADD")
         button.addTarget(self, action: #selector(addWordToUserDictionary), for: .touchUpInside)
         return button
     }()

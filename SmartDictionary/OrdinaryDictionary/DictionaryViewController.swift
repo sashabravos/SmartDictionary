@@ -7,25 +7,25 @@
 
 import UIKit
 
-class DictionaryViewController: UITableViewController {
+final class DictionaryViewController: UITableViewController {
     
-    var dictionaryManager = DictionaryManager()
-    let englishWords = WordBase().wordsArray
-    private let commonMethods = CommonMethods()
+    private let viewModel = DictionaryViewModel()
 
-    var dictionaryItems: [DictionaryModel] = []
-    var filteredDictionaryItems: [DictionaryModel] = []
-    
-    var sections: [String] = []
-    var sectionDictionary: [String: [DictionaryModel]] = [:]
+    private let commonMethods = CommonMethods()
     
     let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.setViewController(self)
+        
+        view.backgroundColor = .white
+        
+        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.lightKhaki)
+        
         // delegate
-        dictionaryManager.delegate = self
+        viewModel.dictionaryManager.delegate = self
         
         // setup navigationBar items
         title = "Dictionary"
@@ -38,59 +38,25 @@ class DictionaryViewController: UITableViewController {
         // register cell
         tableView.register(DictionaryCell.self, forCellReuseIdentifier: Keys.dictionaryCell)
         
-        loadDataFromAPI()
+        viewModel.loadDataFromAPI()
         
-    }
-    
-    func loadDataFromAPI() {
-        for word in englishWords {
-            dictionaryManager.getWordInfo(word: word)
-        }
-    }
-    
-    func filterWords(for searchText: String?) {
-        if let searchText = searchText, !searchText.isEmpty {
-            filteredDictionaryItems = dictionaryItems.filter {
-                $0.currentWord.lowercased().contains(searchText.lowercased())
-            }
-        } else {
-            filteredDictionaryItems = dictionaryItems
-        }
-        groupWords()
-        tableView.reloadData()
-    }
-    
-    func groupWords() {
-        sectionDictionary.removeAll()
-        
-        for dictionaryItem in filteredDictionaryItems {
-            let firstLetter = String(dictionaryItem.currentWord.prefix(1)).uppercased()
-            if var sectionItems = sectionDictionary[firstLetter] {
-                sectionItems.append(dictionaryItem)
-                sectionDictionary[firstLetter] = sectionItems
-            } else {
-                sectionDictionary[firstLetter] = [dictionaryItem]
-            }
-        }
-        
-        sections = sectionDictionary.keys.sorted()
     }
     
     // MARK: - Table View Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return viewModel.sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionTitle = sections[section]
-        return sectionDictionary[sectionTitle]?.count ?? 0
+        let sectionTitle = viewModel.sections[section]
+        return viewModel.sectionDictionary[sectionTitle]?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Keys.dictionaryCell, for: indexPath) as! DictionaryCell
-        let sectionTitle = sections[indexPath.section]
-        let dictionaryItem = sectionDictionary[sectionTitle]?[indexPath.row]
+        let sectionTitle = viewModel.sections[indexPath.section]
+        let dictionaryItem = viewModel.sectionDictionary[sectionTitle]?[indexPath.row]
         
         cell.addButton.addTarget(self, action: #selector(addToUserDictionary), for: .touchUpInside)
         
@@ -100,7 +66,7 @@ class DictionaryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
+        return viewModel.sections[section]
     }
     
     // MARK: - Button Action
@@ -114,11 +80,11 @@ class DictionaryViewController: UITableViewController {
 
 extension DictionaryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterWords(for: searchText)
+        viewModel.filterWords(for: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filterWords(for: nil)
+        viewModel.filterWords(for: nil)
     }
 }
 
@@ -127,8 +93,8 @@ extension DictionaryViewController: UISearchBarDelegate {
 extension DictionaryViewController: DictionaryManagerDelegate {
     func didUpdateData(_ dictionaryManager: DictionaryManager, dictionary: DictionaryModel) {
         DispatchQueue.main.async {
-            self.dictionaryItems.append(dictionary)
-            self.filterWords(for: self.searchController.searchBar.text)
+            self.viewModel.dictionaryItems.append(dictionary)
+            self.viewModel.filterWords(for: self.searchController.searchBar.text)
         }
     }
     

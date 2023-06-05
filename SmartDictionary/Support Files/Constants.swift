@@ -11,6 +11,7 @@ struct Keys {
     static let userCell = "userCellIdentifier"
     static let dictionaryCell = "dictionaryCellIdentifier"
     static let imageCell = "ImageCell"
+    static let popCell = "PopCell"
 }
 
 struct Colors {
@@ -25,5 +26,6 @@ struct FontSizes {
 }
 
 struct ImageNames {
-    static let buttonIcon = "buttonIcon"
+    static let plusButton = "buttonIcon"
+    static let cameraButton = "camera.badge.ellipsis"
 }

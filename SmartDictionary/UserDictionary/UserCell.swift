@@ -49,7 +49,7 @@ class UserCell: UITableViewCell {
     
     func configure(with word: UserWord) {
         
-        backgroundColor = UIColor(named: Colors.backgroundColor)
+        backgroundColor = .white
         
         cellTitle = word.text
         cellTitleTranslation = word.translation

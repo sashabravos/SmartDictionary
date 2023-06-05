@@ -19,40 +19,16 @@ class EditBottomSheet: UIViewController {
     var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    private func anyTextView() -> UITextView {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 20)
-        textView.textColor = .black
-        textView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
-        textView.isEditable = true
-        textView.isScrollEnabled = true
-        textView.layer.cornerRadius = 10
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.lightGray.cgColor
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 8, bottom: 4, right: 8)
-        
-        return textView
-    }
+    private var commonMethods = CommonMethods()
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }()
+    lazy var titleLabel = commonMethods.bottomSheetTitleLabel("Add your new word")
     
-    lazy var newWordTextView = anyTextView()
-    lazy var translationTextView = anyTextView()
-    lazy var exampleTextView = anyTextView()
+    lazy var newWordTextView = commonMethods.anyTextView()
+    lazy var translationTextView = commonMethods.anyTextView()
+    lazy var exampleTextView = commonMethods.anyTextView()
     
     private lazy var updateButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("UPDATE", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(red: 0.31, green: 0.75, blue: 0.63, alpha: 1.0)
-        button.layer.cornerRadius = 8
+        let button = commonMethods.bottomSheetBigButton(title: "UPDATE")
         button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         return button
     }()

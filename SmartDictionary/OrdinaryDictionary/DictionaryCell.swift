@@ -32,6 +32,8 @@ final class DictionaryCell: UITableViewCell {
         
         configUI()
         
+        backgroundColor = .white
+        
         [wordLabel, transcriptionLabel, translationLabel, addButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
