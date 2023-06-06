@@ -39,7 +39,7 @@ class GalleryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // setup navigationBar items
         title = "Gallery"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -52,7 +52,7 @@ class GalleryViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
+            
             cameraButton.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: -26),
             cameraButton.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -42)
         ])
@@ -77,9 +77,30 @@ class GalleryViewController: UIViewController {
     
     @objc private func showPopoverViewController() {
         let popVC = PopViewController()
-//        popVC.delegate = self
         
-        present(popVC, animated: true)
+        popVC.preferredContentSize = CGSize(width: 200, height: 130)
+        popVC.modalPresentationStyle = .popover
+        popVC.presentationController?.delegate = self
+        
+        if let pop = popVC.popoverPresentationController {
+            pop.sourceView = self.view
+            
+            let offset: CGFloat = 170
+            let sourceRectY = self.view.bounds.height - offset
+
+            pop.sourceRect = CGRect(x: self.view.bounds.maxX, y: sourceRectY, width: 0, height: 0)
+
+            pop.permittedArrowDirections = []
+        }
+        
+        navigationController?.present(popVC, animated: true)
+    }
+}
+
+extension GalleryViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }
 

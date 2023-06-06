@@ -7,18 +7,10 @@
 
 import UIKit
 
-final class PopViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
+final class PopViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        PopViewController().modalPresentationStyle = .popover
-        
-        let popover = PopViewController().popoverPresentationController!
-            popover.delegate = self
-            popover.sourceView = self.view
-            popover.sourceRect = CGRect(x: 0, y: 0, width: 100, height: 50)
-
 
         tableView.register(PopCell.self, forCellReuseIdentifier: Keys.popCell)
     }

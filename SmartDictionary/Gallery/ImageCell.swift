@@ -8,9 +8,9 @@
 import UIKit
 
 //
-//protocol ImageSelectionDelegate: AnyObject {
+// protocol ImageSelectionDelegate: AnyObject {
 //    func didSelectImage(_ image: UIImage?, withDescription description: String?)
-//}
+// }
 
 class ImageCell: UICollectionViewCell {
     
