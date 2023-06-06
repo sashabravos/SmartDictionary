@@ -1,13 +1,19 @@
 //
-//  GalleryViewController.swift
+//  SearchViewController.swift
 //  SmartDictionary
 //
-//  Created by Александра Кострова on 01.06.2023.
+//  Created by Александра Кострова on 06.06.2023.
 //
 
 import UIKit
 
-class GalleryViewController: UIViewController {
+final class SearchViewController: UIViewController {
+    
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search"
+        return searchController
+    }()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -22,45 +28,25 @@ class GalleryViewController: UIViewController {
         return collectionView
     }()
     
-    private lazy var cameraButton: UIButton = {
-        let button = UIButton()
-        
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular, scale: .large)
-        let largeCamera = UIImage(systemName: ImageNames.cameraButton, withConfiguration: largeConfig)
-        button.setImage(largeCamera, for: .normal)
-        button.backgroundColor = .clear
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     var cellWidth: CGFloat = 0
     var cellHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup navigationBar items
-        title = "Gallery"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.topItem?.searchController = searchController
         
         view.addSubview(collectionView)
-        view.addSubview(cameraButton)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            cameraButton.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor, constant: -26),
-            cameraButton.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -42)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        cameraButton.addTarget(self, action: #selector(showPopoverViewController), for: .touchUpInside)
         
         collectionView.backgroundColor = .white
     }
@@ -74,39 +60,23 @@ class GalleryViewController: UIViewController {
         cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
         cellHeight = 170
     }
-    
-    @objc private func showPopoverViewController() {
-        let popVC = PopViewController()
-        
-        popVC.preferredContentSize = CGSize(width: 200, height: 130)
-        popVC.modalPresentationStyle = .popover
-        popVC.presentationController?.delegate = self
-        
-        if let pop = popVC.popoverPresentationController {
-            pop.sourceView = self.view
-            
-            let offset: CGFloat = 170
-            let sourceRectY = self.view.bounds.height - offset
-
-            pop.sourceRect = CGRect(x: self.view.bounds.maxX, y: sourceRectY, width: 0, height: 0)
-
-            pop.permittedArrowDirections = []
-        }
-        
-        navigationController?.present(popVC, animated: true)
-    }
 }
 
-extension GalleryViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController,
-                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
+// MARK: - UISearchBarDelegate
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("textDidChange")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("CancelButton")
     }
 }
 
 // MARK: - Collection View Methods
 
-extension GalleryViewController: UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
@@ -115,8 +85,8 @@ extension GalleryViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier,
                                                          for: indexPath) as? ImageCell {
-            let image = UIImage(named: "CookieMonster")
-            let title = "CookieMonster"
+            let image = UIImage(named: "elmo")
+            let title = "Elmo"
             
             cell.configure(with: image ?? UIImage(), title: title)
             
@@ -126,7 +96,7 @@ extension GalleryViewController: UICollectionViewDataSource {
     }
 }
 
-extension GalleryViewController: UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

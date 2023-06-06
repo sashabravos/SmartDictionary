@@ -36,6 +36,8 @@
 		03F284802A2E4DF9009A7514 /* PopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2847F2A2E4DF9009A7514 /* PopViewController.swift */; };
 		03F284822A2E4E0D009A7514 /* PopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284812A2E4E0D009A7514 /* PopCell.swift */; };
 		03F284842A2E4EE8009A7514 /* PopCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284832A2E4EE8009A7514 /* PopCellModel.swift */; };
+		03F284862A2F4649009A7514 /* PopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284852A2F4649009A7514 /* PopViewModel.swift */; };
+		03F284882A2F4DB4009A7514 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284872A2F4DB4009A7514 /* SearchViewController.swift */; };
 		848C7AFEB0744AB129752CEC /* Pods_SmartDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +73,8 @@
 		03F2847F2A2E4DF9009A7514 /* PopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewController.swift; sourceTree = "<group>"; };
 		03F284812A2E4E0D009A7514 /* PopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCell.swift; sourceTree = "<group>"; };
 		03F284832A2E4EE8009A7514 /* PopCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCellModel.swift; sourceTree = "<group>"; };
+		03F284852A2F4649009A7514 /* PopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewModel.swift; sourceTree = "<group>"; };
+		03F284872A2F4DB4009A7514 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		10F58CD36E44643ECD8896E4 /* Pods_SmartDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9FBA0170069BB70132B7C6F /* Pods-SmartDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.debug.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.debug.xcconfig"; sourceTree = "<group>"; };
 		ED611777528C7176E6DAB9D2 /* Pods-SmartDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartDictionary.release.xcconfig"; path = "Target Support Files/Pods-SmartDictionary/Pods-SmartDictionary.release.xcconfig"; sourceTree = "<group>"; };
@@ -199,8 +203,8 @@
 			children = (
 				03F2847D2A2E3D8B009A7514 /* ImagesAPI */,
 				030A11B72A28FF03009D2E69 /* ImageCell.swift */,
-				030A11B52A28F954009D2E69 /* GalleryViewController.swift */,
 				03F2847B2A2E3D7B009A7514 /* GalleryViewModel.swift */,
+				030A11B52A28F954009D2E69 /* GalleryViewController.swift */,
 				03F2847E2A2E4DC2009A7514 /* PopViewController */,
 			);
 			path = Gallery;
@@ -209,6 +213,7 @@
 		03F2847D2A2E3D8B009A7514 /* ImagesAPI */ = {
 			isa = PBXGroup;
 			children = (
+				03F284872A2F4DB4009A7514 /* SearchViewController.swift */,
 			);
 			path = ImagesAPI;
 			sourceTree = "<group>";
@@ -218,6 +223,7 @@
 			children = (
 				03F284812A2E4E0D009A7514 /* PopCell.swift */,
 				03F284832A2E4EE8009A7514 /* PopCellModel.swift */,
+				03F284852A2F4649009A7514 /* PopViewModel.swift */,
 				03F2847F2A2E4DF9009A7514 /* PopViewController.swift */,
 			);
 			path = PopViewController;
@@ -355,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03F284862A2F4649009A7514 /* PopViewModel.swift in Sources */,
 				03F284782A2D2486009A7514 /* ClassExtensions.swift in Sources */,
 				03F284842A2E4EE8009A7514 /* PopCellModel.swift in Sources */,
 				034EDF122A14226100DD1087 /* DictionaryCell.swift in Sources */,
@@ -382,6 +389,7 @@
 				035E07002A1AD955008D9EA2 /* DictionaryManager.swift in Sources */,
 				035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */,
 				03F284822A2E4E0D009A7514 /* PopCell.swift in Sources */,
+				03F284882A2F4DB4009A7514 /* SearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

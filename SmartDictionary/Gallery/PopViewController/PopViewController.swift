@@ -7,20 +7,26 @@
 
 import UIKit
 
-final class PopViewController: UITableViewController {
-
+final class PopViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    private let viewModel = PopViewModel()
+    private let imagePicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.setViewController(self)
 
+        imagePicker.delegate = self
         tableView.register(PopCell.self, forCellReuseIdentifier: Keys.popCell)
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -34,8 +40,20 @@ final class PopViewController: UITableViewController {
     }
     
     // MARK: - Tableview Delegate Methods
-        
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.popCell, for: indexPath) as! PopCell
+        
+        switch indexPath.row {
+        case 0:
+            viewModel.openGalleryButtonTapped(self)
+        case 1:
+            viewModel.openCameraButtonTapped(self)
+        case 2:
+            viewModel.openSearchViewController(self)
+        default:
+            print("Cell error")
+        }
     }
 }

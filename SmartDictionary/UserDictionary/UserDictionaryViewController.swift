@@ -59,6 +59,8 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         
         viewModel.setViewController(self)
         
+        editBottomSheet.delegate = self
+        
         tableView.backgroundColor = .white
         navigationController?.navigationBar.barTintColor = UIColor(named: Colors.midKhaki)
         
@@ -72,8 +74,6 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        editBottomSheet.delegate = self
         
         // Register cell
         tableView.register(UserCell.self, forCellReuseIdentifier: Keys.userCell)
