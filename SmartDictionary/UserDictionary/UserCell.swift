@@ -9,7 +9,7 @@ import UIKit
 
 class UserCell: UITableViewCell {
     
-    static let identifier = Keys.userCell
+    static let identifier = CellNames.userCell
     
     var showsDeleteButton: Bool = false {
             didSet {

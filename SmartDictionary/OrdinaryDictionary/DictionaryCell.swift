@@ -9,7 +9,7 @@ import UIKit
 
 final class DictionaryCell: UITableViewCell {
     
-    static let identifier = Keys.dictionaryCell
+    static let identifier = CellNames.dictionaryCell
     
     private lazy var wordLabel = UILabel()
     private lazy var transcriptionLabel = UILabel()

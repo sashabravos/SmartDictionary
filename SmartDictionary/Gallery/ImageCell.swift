@@ -7,14 +7,9 @@
 
 import UIKit
 
-//
-// protocol ImageSelectionDelegate: AnyObject {
-//    func didSelectImage(_ image: UIImage?, withDescription description: String?)
-// }
-
 class ImageCell: UICollectionViewCell {
     
-    static let identifier = Keys.imageCell
+    static let identifier = CellNames.imageCell
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -72,20 +67,4 @@ class ImageCell: UICollectionViewCell {
         imageView.image = image
         titleLabel.text = title
     }
-    
-    //    func loadImageFromURL(_ url: URL) {
-    //        // Загрузка картинки из интернета
-    //        // ...
-    //
-    ////        imageView.image = loadedImage
-    ////        delegate?.didSelectImage(loadedImage, withDescription: nil)
-    //    }
-    //
-    //    func takePhoto() {
-    //        // Сделать снимок
-    //        // ...
-    //
-    ////        imageView.image = capturedImage
-    ////        delegate?.didSelectImage(capturedImage, withDescription: nil)
-    //    }
 }

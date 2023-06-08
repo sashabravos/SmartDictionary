@@ -10,10 +10,13 @@ import UIKit
 final class DictionaryViewController: UITableViewController {
     
     private let viewModel = DictionaryViewModel()
-
     private let commonMethods = CommonMethods()
     
-    let searchController = UISearchController(searchResultsController: nil)
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search"
+        return searchController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +35,10 @@ final class DictionaryViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search"
         tableView.tableHeaderView = searchController.searchBar
         
         // register cell
-        tableView.register(DictionaryCell.self, forCellReuseIdentifier: Keys.dictionaryCell)
+        tableView.register(DictionaryCell.self, forCellReuseIdentifier: CellNames.dictionaryCell)
         
         viewModel.loadDataFromAPI()
         
@@ -54,7 +56,8 @@ final class DictionaryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.dictionaryCell, for: indexPath) as! DictionaryCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellNames.dictionaryCell,
+                                                 for: indexPath) as! DictionaryCell
         let sectionTitle = viewModel.sections[indexPath.section]
         let dictionaryItem = viewModel.sectionDictionary[sectionTitle]?[indexPath.row]
         
@@ -71,7 +74,7 @@ final class DictionaryViewController: UITableViewController {
     
     // MARK: - Button Action
     
-    @objc private func addToUserDictionary() {
+    @objc private func addToUserDictionary(_ currentCell: DictionaryCell) {
         commonMethods.showBottomSheet(self, bottomSheet: AddWordBottomSheet())
     }
 }

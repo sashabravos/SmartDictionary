@@ -17,7 +17,7 @@ struct DictionaryManager {
     var delegate: DictionaryManagerDelegate?
 
     let baseURL = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup?lang=en-ru&key="
-    let apiKey = "ADD_YOUR_API_KEY"
+    let apiKey = Keys.yandexDictionaryAPIKey
 
     func getWordInfo(word: String) {
         let urlString = "\(baseURL)\(apiKey)&text=\(word)"

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 //        window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         // for test only
-        window?.rootViewController = UINavigationController(rootViewController: GalleryViewController())
+        window?.rootViewController = UINavigationController(rootViewController: SearchViewController())
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

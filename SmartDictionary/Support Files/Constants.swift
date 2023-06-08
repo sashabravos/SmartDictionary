@@ -8,9 +8,17 @@
 import Foundation
 
 struct Keys {
+    static let yandexDictionaryAPIKey = "YOUR_KEY"
+    static let sdWebImageAPIKey = "YOUR_KEY"
+}
+
+struct CellNames {
     static let userCell = "userCellIdentifier"
     static let dictionaryCell = "dictionaryCellIdentifier"
+    
     static let imageCell = "ImageCell"
+    static let searchImageCell = "NetImage"
+    
     static let popCell = "PopCell"
 }
 
@@ -28,4 +36,5 @@ struct FontSizes {
 struct ImageNames {
     static let plusButton = "buttonIcon"
     static let cameraButton = "camera.badge.ellipsis"
+    static let checkmark = "checkmark"
 }

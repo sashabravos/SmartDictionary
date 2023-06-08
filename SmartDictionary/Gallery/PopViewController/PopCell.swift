@@ -9,7 +9,7 @@ import UIKit
 
 class PopCell: UITableViewCell {
 
-    static let identifier = Keys.popCell
+    static let identifier = CellNames.popCell
     
     lazy var cellTitle: UILabel = {
         let label = UILabel()

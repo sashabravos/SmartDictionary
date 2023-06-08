@@ -41,7 +41,7 @@ class GalleryViewController: UIViewController {
         super.viewDidLoad()
         
         // setup navigationBar items
-        title = "Gallery"
+        title = "Picture dictionary"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.addSubview(collectionView)

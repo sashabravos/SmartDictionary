@@ -18,7 +18,7 @@ final class PopViewController: UITableViewController, UIImagePickerControllerDel
         viewModel.setViewController(self)
 
         imagePicker.delegate = self
-        tableView.register(PopCell.self, forCellReuseIdentifier: Keys.popCell)
+        tableView.register(PopCell.self, forCellReuseIdentifier: CellNames.popCell)
     }
     
     // MARK: - Table view data source
@@ -32,7 +32,7 @@ final class PopViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.popCell, for: indexPath) as! PopCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellNames.popCell, for: indexPath) as! PopCell
         
         cell.cellTitle.text = "\(PopCellModel.buttonNames[indexPath.row])"
         
@@ -43,7 +43,6 @@ final class PopViewController: UITableViewController, UIImagePickerControllerDel
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.popCell, for: indexPath) as! PopCell
         
         switch indexPath.row {
         case 0:

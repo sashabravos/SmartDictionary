@@ -15,6 +15,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     
     private let commonMethods = CommonMethods()
     private let editBottomSheet = EditBottomSheet()
+    private let addWordBottomSheet = AddWordBottomSheet()
 
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -59,6 +60,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         
         viewModel.setViewController(self)
         
+        addWordBottomSheet.delegate = self
         editBottomSheet.delegate = self
         
         tableView.backgroundColor = .white
@@ -76,7 +78,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Register cell
-        tableView.register(UserCell.self, forCellReuseIdentifier: Keys.userCell)
+        tableView.register(UserCell.self, forCellReuseIdentifier: CellNames.userCell)
         
         floatingButton.addTarget(self, action: #selector(showAddWordBottomSheet), for: .touchUpInside)
         
@@ -121,7 +123,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Keys.userCell, for: indexPath) as! UserCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellNames.userCell, for: indexPath) as! UserCell
         let word: String
         if isSearchActive() {
             let allWords = viewModel.wordDictionary.values.flatMap({ $0 })
@@ -201,8 +203,6 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     }
     
     @objc private func showAddWordBottomSheet() {
-        let addWordBottomSheet = AddWordBottomSheet()
-        addWordBottomSheet.delegate = self
         commonMethods.showBottomSheet(self, bottomSheet: addWordBottomSheet)
     }
     

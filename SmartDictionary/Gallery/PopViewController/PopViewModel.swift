@@ -36,16 +36,3 @@ final class PopViewModel {
         tableVC.present(nav, animated: true, completion: nil)
     }
 }
-
-//    // UIImagePickerControllerDelegate methods
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        if let selectedImage = info[.originalImage] as? UIImage {
-//            // Обработка выбранного изображения
-//        }
-//        picker.dismiss(animated: true, completion: nil)
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true, completion: nil)
-//    }
