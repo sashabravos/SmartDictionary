@@ -26,14 +26,6 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     private lazy var floatingButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: ImageNames.plusButton), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(button)
-        NSLayoutConstraint.activate([
-            button.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-            button.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            button.widthAnchor.constraint(equalToConstant: 65),
-            button.heightAnchor.constraint(equalToConstant: 65)
-        ])
         return button
     }()
     
@@ -58,17 +50,24 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        setupNavigationBarItems()
+
         viewModel.setViewController(self)
         
         addWordBottomSheet.delegate = self
         editBottomSheet.delegate = self
         
-        tableView.backgroundColor = .white
-        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.midKhaki)
-        
-        // Setup navigationBar items
+        viewModel.loadWords()
+        viewModel.groupWords()
+    }
+    
+    // MARK: - Lifecycle methods
+    
+    private func setupNavigationBarItems() {
         title = "Your words 😜"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.midKhaki)
         
         navigationItem.leftBarButtonItem = dictionaryButton
         navigationItem.rightBarButtonItem = addButton
@@ -76,14 +75,24 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    private func setupViews() {
+        tableView.backgroundColor = .white
         
-        // Register cell
-        tableView.register(UserCell.self, forCellReuseIdentifier: CellNames.userCell)
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(floatingButton)
+        NSLayoutConstraint.activate([
+            floatingButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
+            floatingButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            floatingButton.widthAnchor.constraint(equalToConstant: 65),
+            floatingButton.heightAnchor.constraint(equalToConstant: 65)
+        ])
         
         floatingButton.addTarget(self, action: #selector(showAddWordBottomSheet), for: .touchUpInside)
         
-        viewModel.loadWords()
-        viewModel.groupWords()
+        // Register cell
+        tableView.register(UserCell.self, forCellReuseIdentifier: CellNames.userCell)
     }
     
     

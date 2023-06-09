@@ -12,7 +12,7 @@ protocol EditBottomSheetDelegate: AnyObject {
     func updateWord(_ word: UserWord)
 }
 
-class EditBottomSheet: UIViewController {
+final class EditBottomSheet: UIViewController {
     
     weak var delegate: EditBottomSheetDelegate?
     

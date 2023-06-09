@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageRequestManager {
+final class ImageRequestManager {
         
     func request(for searchQuery: String, completion: @escaping (Data?, Error?) -> Void) {
         let parameters = self.prepareParameters(searchTerm: searchQuery)

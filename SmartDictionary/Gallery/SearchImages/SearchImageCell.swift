@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class SearchImageCell: UICollectionViewCell {
+final class SearchImageCell: UICollectionViewCell {
     
     static let identifier = CellNames.searchImageCell
     

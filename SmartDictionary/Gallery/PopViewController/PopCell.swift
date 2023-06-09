@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PopCell: UITableViewCell {
+final class PopCell: UITableViewCell {
 
     static let identifier = CellNames.popCell
     

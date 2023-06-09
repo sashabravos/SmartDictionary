@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ImageResponse {
+final class ImageResponse {
     
     var imageRequestManager = ImageRequestManager()
     

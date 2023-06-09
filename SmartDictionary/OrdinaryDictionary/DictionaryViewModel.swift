@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DictionaryViewModel {
+final class DictionaryViewModel {
     
     weak var viewController: DictionaryViewController?
     

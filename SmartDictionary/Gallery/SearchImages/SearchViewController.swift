@@ -48,7 +48,6 @@ final class SearchViewController: UIViewController {
         setCollectionView()
     }
     
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -61,13 +60,13 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Lifecycle methods
     
-    private func setNavigationBarItems() {
+    private func setupNavigationBarItems() {
         navigationItem.leftBarButtonItem = cancelBarButtonItem
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
     
-    private func setCollectionView() {
+    private func setupCollectionView() {
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

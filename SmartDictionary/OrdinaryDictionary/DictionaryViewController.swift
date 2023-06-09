@@ -21,27 +21,32 @@ final class DictionaryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        setupNavigationBarItems()
+        
         viewModel.setViewController(self)
         
-        view.backgroundColor = .white
-        
-        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.lightKhaki)
-        
-        // delegate
         viewModel.dictionaryManager.delegate = self
         
-        // setup navigationBar items
+        viewModel.loadDataFromAPI()
+    }
+    
+    // MARK: - Lifecycle methods
+
+    private func setupNavigationBarItems() {
         title = "Dictionary"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barTintColor = UIColor(named: Colors.lightKhaki)
         
         searchController.searchBar.delegate = self
         tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .white
         
         // register cell
         tableView.register(DictionaryCell.self, forCellReuseIdentifier: CellNames.dictionaryCell)
-        
-        viewModel.loadDataFromAPI()
-        
     }
     
     // MARK: - Table View Data Source

@@ -8,15 +8,15 @@
 import UIKit
 import CoreData
 
-class UserDictionaryViewModel {
+final class UserDictionaryViewModel {
     
     weak var viewController: UserDictionaryViewController?
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let request: NSFetchRequest<UserWord> = UserWord.fetchRequest()
     
-    var wordsDatabaseInfo = [UserWord]()
-    var wordDictionary: [String: [String]] = [:]
+    lazy var wordsDatabaseInfo = [UserWord]()
+    lazy var wordDictionary: [String: [String]] = [:]
     
     lazy var words = wordsDatabaseInfo.compactMap { $0.text }
     lazy var sectionKey = Array(wordDictionary.keys.sorted())

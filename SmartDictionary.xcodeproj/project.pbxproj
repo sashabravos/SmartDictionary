@@ -32,7 +32,6 @@
 		035E071B2A22CC12008D9EA2 /* EditBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */; };
 		03F284782A2D2486009A7514 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284772A2D2486009A7514 /* ClassExtensions.swift */; };
 		03F2847A2A2E3691009A7514 /* DictionaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284792A2E3691009A7514 /* DictionaryViewModel.swift */; };
-		03F2847C2A2E3D7B009A7514 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2847B2A2E3D7B009A7514 /* GalleryViewModel.swift */; };
 		03F284802A2E4DF9009A7514 /* PopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2847F2A2E4DF9009A7514 /* PopViewController.swift */; };
 		03F284822A2E4E0D009A7514 /* PopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284812A2E4E0D009A7514 /* PopCell.swift */; };
 		03F284842A2E4EE8009A7514 /* PopCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F284832A2E4EE8009A7514 /* PopCellModel.swift */; };
@@ -73,7 +72,6 @@
 		035E071A2A22CC12008D9EA2 /* EditBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBottomSheet.swift; sourceTree = "<group>"; };
 		03F284772A2D2486009A7514 /* ClassExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		03F284792A2E3691009A7514 /* DictionaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModel.swift; sourceTree = "<group>"; };
-		03F2847B2A2E3D7B009A7514 /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
 		03F2847F2A2E4DF9009A7514 /* PopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewController.swift; sourceTree = "<group>"; };
 		03F284812A2E4E0D009A7514 /* PopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCell.swift; sourceTree = "<group>"; };
 		03F284832A2E4EE8009A7514 /* PopCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCellModel.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				030A11B72A28FF03009D2E69 /* ImageCell.swift */,
-				03F2847B2A2E3D7B009A7514 /* GalleryViewModel.swift */,
 				030A11B52A28F954009D2E69 /* GalleryViewController.swift */,
 				03F2847E2A2E4DC2009A7514 /* PopViewController */,
 				03F2847D2A2E3D8B009A7514 /* SearchImages */,
@@ -422,7 +419,6 @@
 				035E07142A212DCC008D9EA2 /* AddWordBottomSheet.swift in Sources */,
 				034EDF0C2A14158600DD1087 /* Constants.swift in Sources */,
 				034EDF092A14154100DD1087 /* UserCell.swift in Sources */,
-				03F2847C2A2E3D7B009A7514 /* GalleryViewModel.swift in Sources */,
 				035E070B2A201952008D9EA2 /* WordBase.swift in Sources */,
 				034EDF0E2A141F4100DD1087 /* DictionaryViewController.swift in Sources */,
 				034EDF142A14233200DD1087 /* NewWordModel.swift in Sources */,

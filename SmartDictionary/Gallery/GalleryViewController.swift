@@ -7,10 +7,11 @@
 
 import UIKit
 
-class GalleryViewController: UIViewController {
+final class GalleryViewController: UIViewController {
+        
+    var cellWidth: CGFloat = 0
+    var cellHeight: CGFloat = 0
     
-    private let viewModel = GalleryViewModel()
-
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -19,7 +20,6 @@ class GalleryViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identifier)
         return collectionView
     }()
@@ -32,24 +32,40 @@ class GalleryViewController: UIViewController {
         button.setImage(largeCamera, for: .normal)
         button.backgroundColor = .clear
         button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    var cellWidth: CGFloat = 0
-    var cellHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup navigationBar items
         title = "Picture dictionary"
         navigationController?.navigationBar.prefersLargeTitles = true
+                
+        setViews()
         
-//        viewModel.setViewController(self)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        view.addSubview(collectionView)
-        view.addSubview(cameraButton)
+        let numberOfColumns: CGFloat = 3
+        let totalSpacing: CGFloat = 12
+        let availableWidth = collectionView.bounds.width - totalSpacing * numberOfColumns
+        cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
+        cellHeight = 170
+    }
+    
+    // MARK: - Lifecycle methods
+    
+    private func setViews() {
+        collectionView.backgroundColor = .white
+        
+        [collectionView, cameraButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -61,22 +77,7 @@ class GalleryViewController: UIViewController {
             cameraButton.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -42)
         ])
         
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
         cameraButton.addTarget(self, action: #selector(showPopoverViewController), for: .touchUpInside)
-        
-        collectionView.backgroundColor = .white
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        let numberOfColumns: CGFloat = 3
-        let totalSpacing: CGFloat = 12
-        let availableWidth = collectionView.bounds.width - totalSpacing * numberOfColumns
-        cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
-        cellHeight = 170
     }
     
     @objc private func showPopoverViewController() {
