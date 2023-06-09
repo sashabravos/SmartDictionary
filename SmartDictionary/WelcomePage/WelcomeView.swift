@@ -11,7 +11,7 @@ protocol WelcomeViewDelegate: AnyObject {
     func handleSwipe()
 }
 
-class WelcomeView: UIView {
+final class WelcomeView: UIView {
     
     weak var delegate: WelcomeViewDelegate?
     
@@ -60,7 +60,7 @@ class WelcomeView: UIView {
     }
 }
 
-extension WelcomeView {
+private extension WelcomeView {
     
     private func anyLabel(text: String) -> UILabel {
             let label = UILabel()

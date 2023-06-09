@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class SearchViewController: UIViewController {
     
@@ -14,19 +15,8 @@ final class SearchViewController: UIViewController {
     
     private var imageArray = [UnsplashPhoto]()
     
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search"
-        return searchController
-    }()
-    
-    private lazy var addBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImageToGallery))
-    }()
-    
-    private lazy var cancelBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
-    }()
+    var cellWidth: CGFloat = 0
+    var cellHeight: CGFloat = 0
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,23 +26,51 @@ final class SearchViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SearchImageCell.self, forCellWithReuseIdentifier: SearchImageCell.identifier)
         return collectionView
     }()
+
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.setValue("Done", forKey: "cancelButtonText")
+        return searchController
+    }()
     
-    var cellWidth: CGFloat = 0
-    var cellHeight: CGFloat = 0
+    private lazy var cancelBarButtonItem: UIBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigationBarItems()
+        setCollectionView()
+    }
+    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let numberOfColumns: CGFloat = 3
+        let totalSpacing: CGFloat = 3
+        let availableWidth = collectionView.bounds.width - totalSpacing * numberOfColumns
+        cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
+        cellHeight = cellWidth
+    }
+    
+    // MARK: - Lifecycle methods
+    
+    private func setNavigationBarItems() {
         navigationItem.leftBarButtonItem = cancelBarButtonItem
-        navigationItem.rightBarButtonItem = addBarButtonItem
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
+    }
+    
+    private func setCollectionView() {
         
         view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -65,22 +83,12 @@ final class SearchViewController: UIViewController {
         collectionView.delegate = self
         
         collectionView.backgroundColor = .white
+        collectionView.allowsMultipleSelection = true
+
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        let numberOfColumns: CGFloat = 3
-        let totalSpacing: CGFloat = 3
-        let availableWidth = collectionView.bounds.width - totalSpacing * numberOfColumns
-        cellWidth = CGFloat(Int(availableWidth / numberOfColumns))
-        cellHeight = cellWidth
-    }
-    
-    @objc func addImageToGallery() {
-        print("add picture")
-    }
-    
+    // MARK: - Button actions
+
     @objc func cancelButtonTapped() {
         self.dismiss(animated: true)
     }
@@ -108,13 +116,6 @@ extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! SearchImageCell
-        guard let image = cell.imageView.image else { return }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! SearchImageCell
-        guard let image = cell.imageView.image else { return }
     }
 }
 

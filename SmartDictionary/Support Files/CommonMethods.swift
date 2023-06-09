@@ -6,21 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class CommonMethods {
     
-    public func showBottomSheet(_ currentViewController: UIViewController, bottomSheet: UIViewController) {
-        let bottomSheet = bottomSheet
-        let nav = UINavigationController(rootViewController: bottomSheet)
-        nav.modalPresentationStyle = .pageSheet
-        
-        if let sheet = nav.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-        }
-        
-        currentViewController.present(nav, animated: true, completion: nil)
-    }
+    // MARK: - For logical code separation
     
     public func setMyView(_ myView: UIView, _ replaceView: UIView) {
         replaceView.addSubview(myView)
@@ -35,6 +25,20 @@ final class CommonMethods {
     }
     
 // MARK: - BottomSheet's Methods and Views
+    
+    public func showBottomSheet(_ currentViewController: UIViewController, bottomSheet: UIViewController) {
+        let bottomSheet = bottomSheet
+        let nav = UINavigationController(rootViewController: bottomSheet)
+        nav.modalPresentationStyle = .pageSheet
+        
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        currentViewController.present(nav, animated: true, completion: nil)
+    }
+    
     public func anyTextView(_ placeholder: String = "") -> UITextView {
         let textView = UITextView()
         textView.addPlaceholder(text: placeholder)

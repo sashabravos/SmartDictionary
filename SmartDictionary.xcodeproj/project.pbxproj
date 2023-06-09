@@ -103,7 +103,6 @@
 		0343A9662A2BAE9A005E3DCE /* UserDictionary */ = {
 			isa = PBXGroup;
 			children = (
-				035E06FC2A1AD855008D9EA2 /* CoreData */,
 				034EDF082A14154100DD1087 /* UserCell.swift */,
 				0343A9642A2B4D2B005E3DCE /* UserDictionaryViewModel.swift */,
 				034EDEEF2A12CFC600DD1087 /* UserDictionaryViewController.swift */,
@@ -135,6 +134,7 @@
 			children = (
 				034EDEEB2A12CFC600DD1087 /* AppDelegate.swift */,
 				034EDEED2A12CFC600DD1087 /* SceneDelegate.swift */,
+				035E06FC2A1AD855008D9EA2 /* CoreData */,
 				03F284752A2D2347009A7514 /* WelcomePage */,
 				0343A9662A2BAE9A005E3DCE /* UserDictionary */,
 				03F284742A2D2320009A7514 /* OrdinaryDictionary */,
@@ -213,8 +213,6 @@
 				03F2847B2A2E3D7B009A7514 /* GalleryViewModel.swift */,
 				030A11B52A28F954009D2E69 /* GalleryViewController.swift */,
 				03F2847E2A2E4DC2009A7514 /* PopViewController */,
-				03F2848A2A2F5D27009A7514 /* PhotoGallery */,
-				03F284892A2F5CEF009A7514 /* Camera */,
 				03F2847D2A2E3D8B009A7514 /* SearchImages */,
 			);
 			path = Gallery;
@@ -239,20 +237,6 @@
 				03F2847F2A2E4DF9009A7514 /* PopViewController.swift */,
 			);
 			path = PopViewController;
-			sourceTree = "<group>";
-		};
-		03F284892A2F5CEF009A7514 /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Camera;
-			sourceTree = "<group>";
-		};
-		03F2848A2A2F5D27009A7514 /* PhotoGallery */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PhotoGallery;
 			sourceTree = "<group>";
 		};
 		03F2848D2A2FA95E009A7514 /* ImageAPI */ = {

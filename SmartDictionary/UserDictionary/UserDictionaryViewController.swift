@@ -16,7 +16,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     private let commonMethods = CommonMethods()
     private let editBottomSheet = EditBottomSheet()
     private let addWordBottomSheet = AddWordBottomSheet()
-
+    
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search"
@@ -69,7 +69,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         // Setup navigationBar items
         title = "Your words 😜"
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         navigationItem.leftBarButtonItem = dictionaryButton
         navigationItem.rightBarButtonItem = addButton
         
@@ -85,6 +85,8 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         viewModel.loadWords()
         viewModel.groupWords()
     }
+    
+    
     
     // MARK: - UITableView DataSource
     
@@ -132,18 +134,18 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
             let sectionKey = Array(viewModel.wordDictionary.keys.sorted())[indexPath.section]
             word = viewModel.wordDictionary[sectionKey]![indexPath.row]
         }
-
+        
         cell.textLabel?.text = word
         if let userWord = viewModel.wordsDatabaseInfo.first(where: { $0.text == word }) {
             cell.configure(with: userWord)
         }
-
+        
         // Delete button
         cell.showsDeleteButton = true
         cell.deleteButtonAction = { [weak self] in
             self?.viewModel.deleteWord(at: indexPath)
         }
-
+        
         return cell
     }
     
@@ -154,9 +156,9 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
             viewModel.deleteWord(at: indexPath)
         }
     }
-
+    
     // MARK: - Tableview Delegate Methods
-        
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
             let editBottomSheet = EditBottomSheet()
@@ -191,7 +193,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     func isSearchBarEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-        
+    
     // MARK: - Floating Button
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -9,6 +9,8 @@ import UIKit
 
 class GalleryViewController: UIViewController {
     
+    private let viewModel = GalleryViewModel()
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -43,6 +45,8 @@ class GalleryViewController: UIViewController {
         // setup navigationBar items
         title = "Picture dictionary"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+//        viewModel.setViewController(self)
         
         view.addSubview(collectionView)
         view.addSubview(cameraButton)

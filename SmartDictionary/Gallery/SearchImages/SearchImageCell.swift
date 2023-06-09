@@ -12,7 +12,7 @@ class SearchImageCell: UICollectionViewCell {
     
     static let identifier = CellNames.searchImageCell
     
-    private let checkmark: UIImageView = {
+    let checkmark: UIImageView = {
         let image = UIImage(named: ImageNames.checkmark)
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +39,11 @@ class SearchImageCell: UICollectionViewCell {
         didSet {
             updateSelectedState()
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
     
     override init(frame: CGRect) {
