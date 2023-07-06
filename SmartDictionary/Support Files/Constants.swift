@@ -8,8 +8,8 @@
 import Foundation
 
 struct Keys {
-    static let yandexDictionaryAPIKey = "YOUR_KEY"
-    static let sdWebImageAPIKey = "YOUR_KEY"
+    static let yandexDictionaryAPIKey = "dict.1.1.20230523T193847Z.1cc981b8cfaaac27.202e5fa9904abb72ed35417b73ff2439c2b98aff"
+    static let sdWebImageAPIKey = "FBmQUcCIthvL4jp1yNFSuKHhq9X8sSWaNNZgjAajXW0"
 }
 
 struct CellNames {

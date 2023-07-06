@@ -10,7 +10,6 @@ import UIKit
 final class DictionaryViewController: UITableViewController {
     
     private let viewModel = DictionaryViewModel()
-    private let commonMethods = CommonMethods()
     
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -80,7 +79,7 @@ final class DictionaryViewController: UITableViewController {
     // MARK: - Button Action
     
     @objc private func addToUserDictionary(_ currentCell: DictionaryCell) {
-        commonMethods.showBottomSheet(self, bottomSheet: AddWordBottomSheet())
+        showBottomSheet(self, bottomSheet: AddWordBottomSheet())
     }
 }
 

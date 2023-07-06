@@ -18,17 +18,15 @@ final class EditBottomSheet: UIViewController {
     
     var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+    lazy var titleLabel = bottomSheetTitleLabel("Add your new word")
     
-    private var commonMethods = CommonMethods()
-    
-    lazy var titleLabel = commonMethods.bottomSheetTitleLabel("Add your new word")
-    
-    lazy var newWordTextView = commonMethods.anyTextView()
-    lazy var translationTextView = commonMethods.anyTextView()
-    lazy var exampleTextView = commonMethods.anyTextView()
+    lazy var newWordTextView = anyTextView()
+    lazy var translationTextView = anyTextView()
+    lazy var exampleTextView = anyTextView()
     
     private lazy var updateButton: UIButton = {
-        let button = commonMethods.bottomSheetBigButton(title: "UPDATE")
+        let button = bottomSheetBigButton(title: "UPDATE")
         button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         return button
     }()

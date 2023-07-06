@@ -10,7 +10,7 @@ import SDWebImage
 
 final class SearchViewController: UIViewController {
     
-    private var timer: Timer?
+//    private var timer: Timer?
     private let imageResponse = ImageResponse()
     
     private var imageArray = [UnsplashPhoto]()
@@ -44,8 +44,8 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarItems()
-        setCollectionView()
+        setupNavigationBarItems()
+        setupCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -131,14 +131,34 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false,
-                                     block: { (_) in
-            self.imageResponse.fetchImages(for: searchText) { [weak self] (searchResults) in
-                guard let fetchedPhotos = searchResults else { return }
-                self?.imageArray = fetchedPhotos.results
-                self?.collectionView.reloadData()
-            }
-        })
+//        timer?.invalidate()
+//        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false,
+//                                     block: { (_) in
+//        print(searchText)
+//        afterBlock(seconds: 3) {
+//            self.imageResponse.fetchImages(for: searchText) { [weak self] (searchResults) in
+//                guard let fetchedPhotos = searchResults else { return }
+//                self?.imageArray = fetchedPhotos.results
+//                self?.collectionView.reloadData()
+//            }
+//        }
+
+//        })
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        self.imageResponse.fetchImages(for: searchText) { [weak self] (searchResults) in
+            guard let fetchedPhotos = searchResults else { return }
+            self?.imageArray = fetchedPhotos.results
+            self?.collectionView.reloadData()
+        }
+    }
+    
+    func afterBlock( seconds: Int, queue: DispatchQueue =
+                     DispatchQueue.global(), completion: @escaping ()->()) {
+        queue.asyncAfter (deadline: .now() + .seconds (seconds) ) {
+            completion()
+        }
     }
 }

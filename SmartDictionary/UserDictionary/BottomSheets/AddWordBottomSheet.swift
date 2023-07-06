@@ -18,17 +18,15 @@ final class AddWordBottomSheet: UIViewController {
     
     private var userWord: UserWord?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+    private lazy var titleLabel = bottomSheetTitleLabel("Add your new word")
     
-    private var commonMethods = CommonMethods()
-    
-    private lazy var titleLabel = commonMethods.bottomSheetTitleLabel("Add your new word")
-    
-    private lazy var newWordTextView = commonMethods.anyTextView("Enter new word")
-    private lazy var translationTextView = commonMethods.anyTextView("Enter word's translation")
-    private lazy var exampleTextView = commonMethods.anyTextView("Enter your example")
+    private lazy var newWordTextView = anyTextView("Enter new word")
+    private lazy var translationTextView = anyTextView("Enter word's translation")
+    private lazy var exampleTextView = anyTextView("Enter your example")
     
     private lazy var addButton: UIButton = {
-        let button = commonMethods.bottomSheetBigButton(title: "ADD")
+        let button = bottomSheetBigButton(title: "ADD")
         button.addTarget(self, action: #selector(addWordToUserDictionary), for: .touchUpInside)
         return button
     }()
@@ -41,7 +39,7 @@ final class AddWordBottomSheet: UIViewController {
     private func setupViews() {
         
         view.backgroundColor = .white
-        
+                
         [titleLabel, newWordTextView, translationTextView, exampleTextView, addButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -75,7 +73,7 @@ final class AddWordBottomSheet: UIViewController {
     }
     
     @objc private func addWordToUserDictionary() {
-        
+                
         guard let newWord = newWordTextView.text, !newWord.isEmpty else {
             return
         }
@@ -89,9 +87,23 @@ final class AddWordBottomSheet: UIViewController {
             try context.save()
             delegate?.addWord(userWord)
             
+            clearTextField()
+            updatePlaceholderText()
             dismiss(animated: true, completion: nil)
         } catch {
             print("Failed to save word: \(error)")
+        }
+    }
+    
+    private func updatePlaceholderText() {
+        newWordTextView.addPlaceholder(text: "Enter new word")
+        translationTextView.addPlaceholder(text: "Enter word's translation")
+        exampleTextView.addPlaceholder(text: "Enter your example")
+    }
+    
+    private func clearTextField() {
+        [newWordTextView, translationTextView, exampleTextView].forEach {
+            $0.text = ""
         }
     }
 }

@@ -11,7 +11,7 @@ final class ImageCell: UICollectionViewCell {
     
     static let identifier = CellNames.imageCell
     
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true

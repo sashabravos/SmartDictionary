@@ -10,13 +10,12 @@ import UIKit
 final class WelcomeViewController: UIViewController {
     
     private let welcomeView = WelcomeView()
-    private let commonMethods = CommonMethods()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         welcomeView.delegate = self
-        commonMethods.setMyView(welcomeView, self.view)
+        setMyView(welcomeView, self.view)
         
         let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         swipeGestureRecognizer.direction = .up

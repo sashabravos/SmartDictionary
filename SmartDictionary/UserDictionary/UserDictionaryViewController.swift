@@ -13,7 +13,6 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     
     private let viewModel = UserDictionaryViewModel()
     
-    private let commonMethods = CommonMethods()
     private let editBottomSheet = EditBottomSheet()
     private let addWordBottomSheet = AddWordBottomSheet()
     
@@ -44,9 +43,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         button.tintColor = .label
         return button
     }()
-    
-    // MARK: - Lifecycle Methods
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +57,19 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         
         viewModel.loadWords()
         viewModel.groupWords()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            floatingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
+            floatingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            floatingButton.widthAnchor.constraint(equalToConstant: 65),
+            floatingButton.heightAnchor.constraint(equalToConstant: 65)
+        ])
     }
     
     // MARK: - Lifecycle methods
@@ -78,24 +88,15 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     }
     
     private func setupViews() {
-        tableView.backgroundColor = .white
         
-        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .white
         self.view.addSubview(floatingButton)
-        NSLayoutConstraint.activate([
-            floatingButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-            floatingButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            floatingButton.widthAnchor.constraint(equalToConstant: 65),
-            floatingButton.heightAnchor.constraint(equalToConstant: 65)
-        ])
         
         floatingButton.addTarget(self, action: #selector(showAddWordBottomSheet), for: .touchUpInside)
         
         // Register cell
         tableView.register(UserCell.self, forCellReuseIdentifier: CellNames.userCell)
     }
-    
-    
     
     // MARK: - UITableView DataSource
     
@@ -180,7 +181,7 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
                 editBottomSheet.userWord = word
             }
             
-            commonMethods.showBottomSheet(self, bottomSheet: editBottomSheet)
+            showBottomSheet(self, bottomSheet: editBottomSheet)
         } else {
             print("Failed to get UserCell")
         }
@@ -204,17 +205,9 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
     }
     
     // MARK: - Floating Button
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-            floatingButton.isHidden = true
-        } else {
-            floatingButton.isHidden = false
-        }
-    }
-    
+        
     @objc private func showAddWordBottomSheet() {
-        commonMethods.showBottomSheet(self, bottomSheet: addWordBottomSheet)
+       showBottomSheet(self, bottomSheet: addWordBottomSheet)
     }
     
     // MARK: - NavigationBarButton's action

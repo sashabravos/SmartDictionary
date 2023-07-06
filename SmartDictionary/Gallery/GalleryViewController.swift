@@ -113,15 +113,15 @@ extension GalleryViewController: UIPopoverPresentationControllerDelegate {
 
 extension GalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return TestModel.shared.imageNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier,
                                                          for: indexPath) as? ImageCell {
-            let image = UIImage(named: "CookieMonster")
-            let title = "CookieMonster"
+            let image = TestModel.shared.images[indexPath.row]
+            let title = TestModel.shared.imageNames[indexPath.row]
             
             cell.configure(with: image ?? UIImage(), title: title)
             
