@@ -36,6 +36,11 @@ final class AddWordBottomSheet: UIViewController {
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            NotificationCenter.default.post(name: Notification.Name("AddWordBottomSheetWillOpen"), object: nil)
+        }
+    
     private func setupViews() {
         
         view.backgroundColor = .white
@@ -86,19 +91,11 @@ final class AddWordBottomSheet: UIViewController {
         do {
             try context.save()
             delegate?.addWord(userWord)
-            
             clearTextField()
-            updatePlaceholderText()
             dismiss(animated: true, completion: nil)
         } catch {
             print("Failed to save word: \(error)")
         }
-    }
-    
-    private func updatePlaceholderText() {
-        newWordTextView.addPlaceholder(text: "Enter new word")
-        translationTextView.addPlaceholder(text: "Enter word's translation")
-        exampleTextView.addPlaceholder(text: "Enter your example")
     }
     
     private func clearTextField() {

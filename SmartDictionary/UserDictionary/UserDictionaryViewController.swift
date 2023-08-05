@@ -96,6 +96,8 @@ final class UserDictionaryViewController: UITableViewController, UISearchBarDele
         
         // Register cell
         tableView.register(UserCell.self, forCellReuseIdentifier: CellNames.userCell)
+        
+        tableView.reloadData()
     }
     
     // MARK: - UITableView DataSource

@@ -9,7 +9,7 @@ import UIKit
 
 extension UITextView {
     
-    func addPlaceholder(text: String) {
+    public func addPlaceholder(text: String) {
         let placeholderLabel = UILabel()
         placeholderLabel.text = text
         placeholderLabel.font = UIFont.systemFont(ofSize: 20)
@@ -25,16 +25,28 @@ extension UITextView {
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
         ])
-        
-        placeholderLabel.isHidden = !self.text.isEmpty
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange),
                                                name: UITextView.textDidChangeNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textWillChange),
+                                               name: Notification.Name("AddWordBottomSheetWillOpen"), object: nil)
+
     }
     
     @objc private func textDidChange() {
         if let placeholderLabel = self.viewWithTag(13) as? UILabel {
-            placeholderLabel.isHidden = !self.text.isEmpty
+            if !self.text.isEmpty {
+                placeholderLabel.isHidden = true
+            }
+        }
+    }
+    
+    @objc private func textWillChange() {
+        if let placeholderLabel = self.viewWithTag(13) as? UILabel {
+            if self.text.isEmpty {
+                placeholderLabel.isHidden = false
+            }
         }
     }
 }
